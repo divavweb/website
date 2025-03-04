@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dita Vávrová – psycholog, psychoterapie, kouč, mediace, hypnoterapie, úzkost, deprese, emoční přejídání, osobní rozvoj | Valašské Meziříčí online</title>
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --accent-color: #FF7043;
+      --text-color: #333;
+      --bg-gradient: linear-gradient(180deg, #FF7043, #FFC680, #FFEC8B, #FFD9E2 90%, #FFFFFF 100%);
+    }
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-gradient);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      color: var(--text-color);
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: none;
+      color: #fff;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+    header img {
+      width: 100px;
+      height: auto;
+    }
+    .header-text {
+      text-align: left;
+      margin-left: 20px;
+    }
+    .header-text h1 {
+      margin: 0;
+      font-size: 2em;
+      color: var(--primary-color);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .header-text p {
+      margin: 5px 0 0;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #000;
+    }
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+    .nav-links a {
+      display: inline-flex;
+      align-items: center; /* Vertikální vycentrování textu */
+      justify-content: center;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
+      padding: 5px 10px;
+      border: 2px solid var(--primary-color);
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .nav-links a.welcome {
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+    }
+    .nav-links a.welcome:hover,
+    .nav-links a:hover {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+    .main-content {
+      padding: 20px;
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+    }
+    .main-text {
+      max-width: 600px;
+      text-align: left;
+    }
+    .text-center {
+      text-align: center;
+    }
+    .quote {
+      font-style: italic;
+      text-align: center;
+      margin-top: 20px;
+    }
+    /* Červený nadpis – vlevo zarovnaný */
+    .heading-red {
+      color: red;
+      font-size: 1.5em;
+      text-align: left;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+        .highlight-green {
+      color: var(--primary-color);
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    /* Zelený text, větší než běžný text, ale menší než nadpis */
+    .large-green {
+      font-size: 1.3em;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    .button {
+      display: inline-block;
+  margin-top: 20px; /* Přidá mezeru před tlačítkem */
+  padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      color: red;
+      background-color: transparent;
+      border: 2px solid red;
+      border-radius: 5px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    }
+    .button:hover {
+      background-color: red;
+      color: white;
+      transform: scale(1.1);
+    }
+    .highlight {
+      font-weight: bold;
+      color: #000;
+    }
+    .highlight-green {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    .flower-image {
+      margin-top: 20px;
+      max-width: 300px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    footer {
+      text-align: center;
+      padding: 10px 0;
+      color: #fff;
+      margin-top: 20px;
+    }
+      .card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+.card {
+  width: 100%;
+  height: 250px;
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
+}
+
+/* Jemné pastelové barvy pro karty */
+.card:nth-child(1) .card-front, .card:nth-child(1) .card-back { background-color: #ffe699; } 
+.card:nth-child(2) .card-front, .card:nth-child(2) .card-back { background-color: #FFD9E2; } 
+.card:nth-child(3) .card-front, .card:nth-child(3) .card-back { background-color: #FFF9C4; } 
+.card:nth-child(4) .card-front, .card:nth-child(4) .card-back { background-color: #E0F2F1; } 
+.card:nth-child(5) .card-front, .card:nth-child(5) .card-back { background-color: #d9ffcc; } 
+.card:nth-child(6) .card-front, .card:nth-child(6) .card-back { background-color: #f2e6ff; } 
+
+.card-front {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #555;
+  text-align: left;
+}
+
+.highlight-green {
+  color: green;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="divav_logo.png" alt="Logo DIVAV">
+      <div class="header-text">
+        <h1>Nechte svůj život rozkvést!</h1>
+        <p>Mgr. Ing. Dita Vávrová, MBA</p>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">VÍTEJTE</a>
+      <a href="omne.html">O MNĚ</a>
+      <a href="sluzby.html" class="welcome active">SLUŽBY</a>
+      <a href="cenik.html">CENÍK</a>
+      <a href="kontakt.html">KONTAKT</a>
+    </nav>
+  </header>
+  <main class="main-content">
+    <article class="main-text">
+      <div class="quote">
+        <p>„Jediný způsob, jak najít smysl života, je přijmout odpovědnost za své vlastní bytí.“
+– Viktor E. Frankl</p>
+
+      </div>
+      <!-- Červený nadpis, zarovnaný vlevo -->
+      <h2 class="heading-red">Jak Vám mohu pomoci</h2>
+    <p class="text-center large-green"><u>Řešení problémů a krizových situací</u></p>
+    <p>Život přináší situace, které mohou být obtížné zvládnout sami. Ať už jde o nepříjemné emoce, nečekané události nebo dlouhodobé problémy, nabízím Vám prostor, kde můžete otevřeně mluvit o svých starostech. Společně budeme hledat způsoby, jak <strong style="color: #4CAF50;">najít úlevu a znovu získat rovnováhu</strong>.</p>
+    
+    <ul>
+        <li><span class="highlight">Psychické obtíže:</span> smutek, úzkosti, deprese, pocity beznaděje a nesmyslnosti života.</li>
+        <li><span class="highlight">Krizové situace:</span> rozchod, ztráta blízké osoby, nemoc, osamělost.</li>
+        <li><span class="highlight">Úzkosti a strachy:</span> fóbie, posttraumatický stres, nutkavé chování.</li>
+        <li><span class="highlight">Vztahové problémy:</span> konflikty v rodině, na pracovišti, s přáteli.</li>
+        <li><span class="highlight">Psychosomatické obtíže:</span> potíže bez jasné fyziologické příčiny.</li>
+        <li><span class="highlight">Syndrom vyhoření:</span> ztráta energie, motivace a smyslu v práci nebo životě.</li>
+    </ul>
+
+    <p class="text-center large-green"><u>Rozvoj a změna</u></p>
+    <p>Pokud cítíte, že je čas udělat krok kupředu, <strong style="color: #4CAF50;">objevit svůj potenciál nebo přetvořit svůj život</strong>, jste na správném místě. Nabízím podporu v oblasti osobního i profesního růstu, hledání rovnováhy a posilování vztahu k sobě i druhým. Společně se zaměříme na to, co Vás posune blíž k vašim cílům a spokojenosti.</p>
+
+    <ul>
+        <li><span class="highlight">Sebepoznání a přijetí:</span> práce na vztahu k sobě, budování sebevědomí.</li>
+        <li><span class="highlight">Osobní a profesní růst:</span> plánování kariéry, hledání seberealizace.</li>
+        <li><span class="highlight">Změna životního stylu:</span> rovnováha mezi prací a osobním životem, time management, prokrastinace, emoční přejídání.</li>
+        <li><span class="highlight">Rodičovství:</span> podpora v otázkách výchovy, učení a digitálních závislostí dětí.</li>
+        <li><span class="highlight">Hledání směru:</span> rozhodování a přechodové životní situace.</li>
+    </ul>
+  <p class="text-center large-green"><u>Terapie s dětmi a dospívajícími</u></p>
+    <p>Při práci s dětmi a dospívajícími využívám přístup, který odpovídá jejich vývojové fázi, potřebám a způsobu vnímání světa. Terapie u mě probíhá hravou formou, která podporuje zvědavost, kreativitu a rozvoj dovedností vedoucích k překonání obtíží. Vše probíhá přirozeně, nenásilně a s cílem podpořit dítě v nacházení vlastních silných stránek a cest ke zvládnutí životních výzev.
+
+Pokud je to přínosné, spolupracuji také s rodiči nebo dalšími podpůrnými osobami, které mohou dítěti pomoci v jeho rozvoji.</p>
+<style>
+.image-container {
+  text-align: center;
+  margin: 20px 0; /* Přidá mezeru nad a pod obrázkem */
+}
+.image-container img {
+  max-width: 100%; /* Přizpůsobí se velikosti obrazovky */
+  height: auto;
+  display: inline-block;
+}
+</style>
+<div class="image-container">
+  <img src="foto_piskoviste.jpg" alt="piskoviste">
+</div>
+
+    <strong style="color: #4CAF50;">Terapeutické pískoviště</strong></p>
+    Jedním z nástrojů, které využívám, je terapeutické pískoviště – metoda, která umožňuje dětem vyjadřovat své pocity, myšlenky a zážitky prostřednictvím symbolů a her. Dítě si samo vytváří svůj svět v písku a objevuje nové způsoby řešení situací, se kterými se potýká. Tato metoda pomáhá dětem lépe porozumět sobě samým, zpracovat náročné životní situace a posílit sebedůvěru.</p>
+<strong style="color: #4CAF50;">Kids’ Skills – dovednosti místo problémů</strong> </p>
+    V práci s dětmi a dospívajícími používám také metodou Kids’ Skills Bena Furmana. Tento nepatologizující přístup se nezaměřuje na problém samotný, ale na dovednosti, které dítě potřebuje k jeho zvládnutí pomocí vnitřní motivace a schopnosti vidět řešení. 
+
+Metoda Kids’ Skills je vhodná pro děti přibližně od 4 let až po období dospívání. Pomáhá například při:</p>
+    <ul>
+        <li><span class="highlight">Úzkostech a strachu </span> (včetně psychosomatických projevů).</li>
+        <li><span class="highlight">Problémech s impulzivitou, vztekem či výbuchy emocí.</span></li>
+        <li><span class="highlight">Ztrátě motivace a depresivních náladách.</span> </li>
+        <li><span class="highlight">Obtížích v komunikaci </span>s rodiči a autoritami. </li>
+        <li><span class="highlight">Rozhodování o budoucnosti a hledání směru.</span> </li>
+        <li><span class="highlight">Dalších výzvách spojených s dětstvím a dospíváním.</span> </li>
+    </ul>
+          <h2 class="heading-red">Rozdíly mezi službami</h2>
+          <p> Na svých stránkách nabízím služby psychologa, psychoterapeuta, kouče, mediátora i hypnoterapeuta. Každá z těchto oblastí má své specifické zaměření a přínosy. Následující přehled Vám pomůže pochopit rozdíly a vybrat si pro Vás tu nejvhodnější formu podpory.
+Je ale důležité vědět, že si <strong style="color: #000;">nemusíte vybrat předem</strong> – při naší spolupráci vždy <strong style="color: #4CAF50;">přizpůsobím přístup Vašim aktuálním potřebám</strong>. Společně se zaměříme na to, co Vám v dané chvíli nejlépe pomůže, a využijeme kombinaci těchto přístupů podle aktuální situace.</p>
+<div class="card-container">
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-front">Psychologické poradenství</div>
+            <div class="card-back">
+                <p>Jako psycholog se zaměřuji na analýzu situace, problémů a zprostředkování informací, které mohou vést k jejich řešení. Společně identifikujeme možné cesty, jak se posunout dál, přičemž rozhodnutí o řešení zůstává na Vás. Cílem práce není hluboká změna osobnosti, ale praktická pomoc, která Vám umožní lépe zvládat konkrétní výzvy.</p>
+                <p><strong style="color: #4CAF50;">Kdy tuto službu zvolit:</strong> Pokud hledáte poradenství, podporu při rozhodování nebo řešení aktuálních problémů.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-front">Psychoterapie</div>
+            <div class="card-back">
+                <p>Psychoterapie pomáhá zmírnit úzkosti, deprese, stres a vztahové problémy prostřednictvím psychologických metod. Zaměřuje se na zpracování traumat, obnovení pocitu bezpečí a zdravější fungování v každodenním životě. Může doplňovat farmakologickou léčbu, kdy léky tlumí příznaky a terapie mění myšlenkové a emoční vzorce, což může vést ke snížení medikace.
+
+Kromě léčby nabízí psychoterapie prostor pro osobní rozvoj – pomáhá budovat sebevědomí, měnit nezdravé návyky, posilovat vztahy a hledat životní rovnováhu. Není jen cestou k překonání obtíží, ale i k hlubšímu sebepoznání a smysluplnějšímu životu.
+</p>
+                <p><strong style="color: #4CAF50;">Kdy psychoterapii využít:</strong> Pokud hledáte dlouhodobou pomoc při hlubších potížích nebo chcete pracovat na lepším vztahu k sobě i svému okolí.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-front">Koučování</div>
+            <div class="card-back">
+                <p>Koučink je zaměřen na dosažení konkrétních cílů, zlepšení výkonu a hledání motivace. Věnuje se především přítomnosti a budoucnosti – pomáhá Vám naplánovat konkrétní kroky a dosáhnout osobních či profesních ambicí. Koučink se nezabývá minulými traumaty ani léčbou psychologických problémů.</p>
+                <p><strong style="color: #4CAF50;">Kdy koučování využít:</strong> Pokud chcete pracovat na kariérním růstu, zlepšení vztahů nebo na jiných konkrétních cílech.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-front">Hypnoterapie</div>
+            <div class="card-back">
+                <p>Hypnoterapie je bezpečná metoda využívající hlubokou relaxaci k práci s podvědomím. Hypnóza není stav bezmoci, ale přirozený proces soustředění, při kterém si plně uvědomujete okolí a máte kontrolu nad svými rozhodnutími.
+
+Cílem hypnoterapie je podpořit změnu myšlenkových vzorců a zmírnit stres, úzkost či nežádoucí návyky. Pomáhá také posilovat sebevědomí a objevovat nové souvislosti. Její účinnost závisí na Vaší motivaci a ochotě začlenit nové poznatky do života.</p>
+                <p><strong style="color: #4CAF50;">Kdy hypnoterapii využít:</strong> Pokud hledáte hlubší práci na změnách návyků, zvládání stresu nebo podporu při osobním růstu.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-front">Mediace</div>
+            <div class="card-back">
+                <p> Mediace je strukturovaný a důvěrný proces, který pomáhá stranám v konfliktu najít vzájemně přijatelné řešení rychleji a levněji než soudní řízení. Mediace vám dává kontrolu nad výsledkem, umožňuje zachovat vztahy a nabízí bezpečný prostor pro otevřenou diskusi.</p>
+                <p><strong style="color: #4CAF50;">Kdy mediaci využít:</strong> Pokud hledáte cestu k řešení konfliktů, například v rodinných, pracovních nebo sousedských vztazích, kde je žádoucí obnovit komunikaci a dojít k dohodě.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-inner">
+            <div class="card-front">Přednášky a semináře</div>
+            <div class="card-back">
+                <p>Občas potřebujeme čas na zastavení, uvědomění a nové impulzy. Přednášky a semináře jsou příležitostí k nahlédnutí do aktuálních psychologických témat a získání inspirace pro každodenní život, např. jak v životě hledat smysl a rovnováhu, jak zvládat stres či emoční přejídání, jak si lépe organizovat čas nebo se odpojit od digitálního přetížení.
+
+Témata jsou podávána srozumitelně a prakticky. Cílem není jen předávání informací, ale také vytvoření prostoru pro sdílení, uvědomění a nalezení vlastních cest ke spokojenějšímu životu.</p>
+                <p><strong style="color: #4CAF50;">Kdy přednášky a semináře využít: </strong> Pokud hledáte inspiraci, nové pohledy nebo praktické nástroje pro pozitivní změny v osobním životě.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<p class="text-center">
+
+    <a href="kontakt.html" class="button">CHCI SE OBJEDNAT</a>
+</p>
+
+    </article>
+  </main>
+  <footer>
+    <p>&copy; Dita Vávrová, 2025</p>
+  </footer>
+</body>
+</html>
