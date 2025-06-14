@@ -73,6 +73,14 @@ header img {
     gap: 15px;
 }
 
+.nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
 .nav-links a {
     display: inline-flex;
     align-items: center;
@@ -87,13 +95,12 @@ header img {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav-links a.welcome {
+.nav-links a.active {
     background-color: var(--primary-color);
     color: #fff;
-    border: none;
 }
 
-.nav-links a.welcome:hover,
+.nav-links a.active:hover,
 .nav-links a:hover {
     background-color: var(--primary-color);
     color: #fff;
@@ -110,8 +117,7 @@ header img {
 }
 
 .main-text {
-    max-width: border-box;
-    /* 600px */
+    max-width: 600px;
     text-align: left;
 }
 
@@ -125,6 +131,7 @@ header img {
     margin-top: 20px;
 }
 
+/* Červený nadpis – vlevo zarovnaný */
 .heading-red {
     color: red;
     font-size: 1.5em;
@@ -133,6 +140,7 @@ header img {
     font-weight: bold;
 }
 
+/* Zelený text, větší než běžný text, ale menší než nadpis */
 .large-green {
     font-size: 1.3em;
     color: var(--primary-color);
