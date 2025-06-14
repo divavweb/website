@@ -1,13 +1,5 @@
 @import "styles.css";
-
-.button {
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-}
-
-.button:hover {
-    background-color: var(--primary-color);
-}
+@import "green_button.css";
 
 .profile-image {
     float: right; 
