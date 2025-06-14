@@ -1,6 +1,6 @@
 :root {
     --primary-color: #4CAF50;
-    --accent-color: #FF7043;
+    --secondary-color: #FF0000;
     --text-color: #333;
     --bg-gradient: linear-gradient(180deg, #FF7043, #FFC680, #FFEC8B, #FFD9E2 90%, #FFFFFF 100%);
 }
@@ -14,6 +14,20 @@ body {
     background-size: 400% 400%;
     animation: gradientShift 10s ease infinite;
     color: var(--text-color);
+}
+
+h2 {
+    color: var(--secondary-color);
+    font-size: 1.5em;
+    text-align: left;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.3em;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 @keyframes gradientShift {
@@ -131,30 +145,14 @@ header img {
     margin-top: 20px;
 }
 
-/* Červený nadpis – vlevo zarovnaný */
-.heading-red {
-    color: red;
-    font-size: 1.5em;
-    text-align: left;
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-/* Zelený text, větší než běžný text, ale menší než nadpis */
-.large-green {
-    font-size: 1.3em;
-    color: var(--primary-color);
-    font-weight: bold;
-}
-
 .button {
     display: inline-block;
     padding: 5px 10px;
     font-size: 14px;
     font-weight: bold;
-    color: red;
+    color: var(--secondary-color);
     background-color: transparent;
-    border: 2px solid red;
+    border: 2px solid var(--secondary-color);
     border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
@@ -162,7 +160,7 @@ header img {
 }
 
 .button:hover {
-    background-color: red;
+    background-color: var(--secondary-color);
     color: white;
     transform: scale(1.1);
 }
@@ -175,14 +173,6 @@ header img {
 .highlight-green {
     font-weight: bold;
     color: var(--primary-color);
-}
-
-.flower-image {
-    margin-top: 20px;
-    max-width: 300px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 footer {
