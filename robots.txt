@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: 
+Sitemap: https://divav.cz/sitemap.xml
