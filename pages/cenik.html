@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <link rel="stylesheet" href="../css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Přehled cen a služeb, ceník, psychologického poradenství, psychoterapie, koučování, terapeutických sezení a mediace. Valašské Meziříčí, online konzultace. Přehled služeb i platebních podmínek ">
+    <title>Dita Vávrová – psycholog, psychoterapie, kouč, mediace, hypnoterapie, úzkost, deprese, emoční přejídání, osobní rozvoj | Valašské Meziříčí online</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --accent-color: #FF7043;
+            --text-color: #333;
+            --bg-gradient: linear-gradient(180deg, #FF7043, #FFC680, #FFEC8B, #FFD9E2 90%, #FFFFFF 100%);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            color: var(--text-color);
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: none;
+            color: #fff;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        header img {
+            width: 100px;
+            height: auto;
+        }
+
+        .header-text {
+            text-align: left;
+            margin-left: 20px;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 2em;
+            color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-text p {
+            margin: 5px 0 0;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #000;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 5px 10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-links a.welcome {
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+        }
+
+        .nav-links a.welcome:hover,
+        .nav-links a:hover {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .main-content {
+            padding: 20px;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main-text {
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .quote {
+            font-style: italic;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Červený nadpis – vlevo zarovnaný */
+        .heading-red {
+            color: red;
+            font-size: 1.5em;
+            text-align: left;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        /* Zelený text, větší než běžný text, ale menší než nadpis */
+        .large-green {
+            font-size: 1.3em;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--primary-color);
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        .button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #000;
+        }
+
+        .highlight-green {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .flower-image {
+            margin-top: 20px;
+            max-width: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            color: #fff;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="../images/divav_logo.png" alt="Logo DIVAV">
+            <div class="header-text">
+                <h1>Nechte svůj život rozkvést!</h1>
+                <p>Mgr. Ing. Dita Vávrová, MBA</p>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="../index.html">VÍTEJTE</a>
+            <a href="omne.html">O MNĚ</a>
+            <a href="sluzby.html">SLUŽBY</a>
+            <a href="cenik.html" class="welcome active">CENÍK</a>
+            <a href="kontakt.html">KONTAKT</a>
+        </nav>
+    </header>
+    <main class="main-content">
+        <article class="main-text">
+            <div class="quote">
+                <p>„Změna je bolestivá, ale nic není tak bolestivé jako zůstat zaseknutý tam, kde nepatříte.“ – Carl R.
+                    Rogers
+                </p>
+            </div>
+            <!-- Červený nadpis, zarovnaný vlevo -->
+            <h2 class="heading-red" id="o-mne">Ceník služeb:</h2>
+
+            <p><span class="highlight-green"><u>Psychologické poradenství, psychoterapie, koučování,
+                        hypnoterapie:</u></span>
+            </p>
+
+            • <strong style="color: #000;">50minutová</strong> konzultace: <strong style="color: #000;">900 Kč</strong>
+            </p>
+            • <strong style="color: #000;">80minutová</strong> konzultace: <strong style="color: #000;">1 400
+                Kč</strong></p>
+            • Cena zahrnuje kromě samotné konzultace také přípravu na jednotlivá sezení, vedení dokumentace, průběžné
+            vzdělávání, supervizi, atd.</p>
+            • Cena je stejná pro osobní konzultace v terapeutovně i online nebo telefonická setkání.</p>
+            </p>
+            <p><span class="highlight-green"><u>Mediace:</u></span></p>
+
+            • <strong style="color: #000;">mediační setkání</strong> (obvyklá délka 3 hodiny): <strong
+                style="color: #000;">3
+                400 Kč</strong></p> • nebo <strong style="color: #000;">1 200 Kč </strong>za započatou hodinu.
+            <p><span class="highlight-green"><u>Přednášky a semináře:</u></span></p>
+
+            • <strong style="color: #000;">cena dle dohody</strong></p>
+            <span class="highlight-green">Každá změna začíná prvním krokem. Společně můžeme najít cestu, která Vám bude
+                dávat
+                smysl.</span>
+            <p class="text-center">
+                <a href="kontakt.html" class="button">CHCI SE OBJEDNAT</a>
+            </p>
+            <h2 class="heading-red">Platební podmínky:</h2>
+            <p>• Platba probíhá na konci konzultace.</p>
+            <p>• První setkání lze platit pouze hotově oproti dokladu. Hotovost mějte prosím nachystanou přesně.</p>
+            <p>• Od druhé konzultace nebo setkání online nebo telefonicky je možné platit i převodem na účet oproti
+                faktuře.
+            </p>
+            <p>• Nejsem plátce DPH.</p>
+            <h2 class="heading-red">Storno podmínky:</h2>
+            <p>• <strong style="color: #000;">Bezplatné zrušení nebo přeobjednání </strong>konzultace je možné
+                nejpozději
+                <strong style="color: #000;">24 hodin </strong>před sjednaným termínem prostřednictvím SMS nebo e-mailu.
+            </p>
+            <p>• Pokud bude konzultace zrušena v kratším čase, bude účtován storno poplatek ve výši <strong
+                    style="color: #000;">700 Kč</strong>.</p>
+            <p>• Po dohodě je možné konzultaci v daném čase nabídnout někomu z blízkých, kdo přijde místo Vás.</p>
+            <p>• Pokud budu muset konzultaci do 24 hodin zrušit já, nabídnu Vám <strong style="color: #000;">náhradní
+                    termín
+                    co nejdříve spolu s 30 % slevou.</strong></p>
+            <h2 class="heading-red">Výhody placené terapie:</h2>
+            <p>• Termíny v co nejkratší době, v odpoledních hodinách i o víkendu.</p>
+            <p>• Časová dotace i frekvence setkávání je přizpůsobená Vašim potřebám</p>
+            <p>• Není třeba doporučení lékaře.</p>
+            <p>• Využití psychologických služeb není nikde evidováno (bez uvedení v lékařských dokumentech).</p>
+
+            <h2 class="heading-red">Další informace:</h2>
+            <p>• Neposkytuji zdravotnické služby.</p>
+            <p>• Na služby není možné čerpat příspěvek ze zdravotní pojišťovny.</p>
+            <p>• Ve výjimečných a odůvodněných případech je možné individuálně přizpůsobit cenu.</p>
+            <p>• IČ: 18016570</p>
+
+            </p>
+
+        </article>
+    </main>
+    <footer>
+        <p>&copy; Dita Vávrová, 2025</p>
+    </footer>
+</body>
+
+</html>
