@@ -175,6 +175,17 @@ header img {
     color: var(--primary-color);
 }
 
+.image-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
+}
+
 footer {
     text-align: center;
     padding: 10px 0;
