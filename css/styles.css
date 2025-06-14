@@ -165,11 +165,6 @@ header img {
     transform: scale(1.1);
 }
 
-.highlight {
-    font-weight: bold;
-    color: #000;
-}
-
 .highlight-green {
     font-weight: bold;
     color: var(--primary-color);
