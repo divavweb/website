@@ -1,6 +1,6 @@
 :root {
     --primary-color: #4CAF50;
-    --accent-color: #FF7043;
+    --secondary-color: #FF0000;
     --text-color: #333;
     --bg-gradient: linear-gradient(180deg, #FF7043, #FFC680, #FFEC8B, #FFD9E2 90%, #FFFFFF 100%);
 }
@@ -14,6 +14,20 @@ body {
     background-size: 400% 400%;
     animation: gradientShift 10s ease infinite;
     color: var(--text-color);
+}
+
+h2 {
+    color: var(--secondary-color);
+    font-size: 1.5em;
+    text-align: left;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: 1.3em;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 @keyframes gradientShift {
@@ -73,6 +87,14 @@ header img {
     gap: 15px;
 }
 
+.nav-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
 .nav-links a {
     display: inline-flex;
     align-items: center;
@@ -87,13 +109,12 @@ header img {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nav-links a.welcome {
+.nav-links a.active {
     background-color: var(--primary-color);
     color: #fff;
-    border: none;
 }
 
-.nav-links a.welcome:hover,
+.nav-links a.active:hover,
 .nav-links a:hover {
     background-color: var(--primary-color);
     color: #fff;
@@ -110,8 +131,7 @@ header img {
 }
 
 .main-text {
-    max-width: border-box;
-    /* 600px */
+    max-width: 600px;
     text-align: left;
 }
 
@@ -125,28 +145,14 @@ header img {
     margin-top: 20px;
 }
 
-.heading-red {
-    color: red;
-    font-size: 1.5em;
-    text-align: left;
-    margin-top: 20px;
-    font-weight: bold;
-}
-
-.large-green {
-    font-size: 1.3em;
-    color: var(--primary-color);
-    font-weight: bold;
-}
-
 .button {
     display: inline-block;
     padding: 5px 10px;
     font-size: 14px;
     font-weight: bold;
-    color: red;
+    color: var(--secondary-color);
     background-color: transparent;
-    border: 2px solid red;
+    border: 2px solid var(--secondary-color);
     border-radius: 5px;
     text-decoration: none;
     cursor: pointer;
@@ -154,14 +160,9 @@ header img {
 }
 
 .button:hover {
-    background-color: red;
+    background-color: var(--secondary-color);
     color: white;
     transform: scale(1.1);
-}
-
-.highlight {
-    font-weight: bold;
-    color: #000;
 }
 
 .highlight-green {
@@ -169,12 +170,16 @@ header img {
     color: var(--primary-color);
 }
 
-.flower-image {
-    margin-top: 20px;
-    max-width: 300px;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.image-container,
+.map-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    display: inline-block;
 }
 
 footer {

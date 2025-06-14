@@ -1,0 +1,9 @@
+@import "styles.css";
+
+.flower-image {
+    margin-top: 20px;
+    max-width: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
