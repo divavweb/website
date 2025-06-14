@@ -175,7 +175,8 @@ header img {
     color: var(--primary-color);
 }
 
-.image-container {
+.image-container,
+.map-container {
     text-align: center;
     margin: 20px 0;
 }
