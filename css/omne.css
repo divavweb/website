@@ -1,10 +1,15 @@
 @import "styles.css";
 @import "green_button.css";
 
+.profile-image-container {
+    display: flex; 
+    justify-content: center;
+}
+
 .profile-image {
-    float: right; 
     margin: 0 0 20px 20px; 
-    max-width: 200px;
+    width: 200px;
+    height: 300px;
 }
 
 .logos-container {
@@ -16,4 +21,26 @@
 
 .logos-container img {
     max-width: 150px;
+}
+
+@media only screen and (max-width: 600px) {
+    .profile-image-container {
+        flex-direction: column; 
+        align-items: center;
+    }
+
+    .profile-image {
+        margin: 0 0 20px 0; 
+        max-width: 100%;
+    }
+
+    .logos-container {
+        flex-direction: column; 
+        align-items: center; 
+        gap: 10px;
+    }
+
+    .logos-container img {
+        max-width: 100%;
+    }
 }
