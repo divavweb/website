@@ -2,6 +2,7 @@
     --primary-color: #4CAF50;
     --secondary-color: #FF0000;
     --text-color: #333;
+    --header-bg-color: #ffcf83;
     --bg-gradient: linear-gradient(180deg, #FF7043, #FFC680, #FFEC8B, #FFD9E2 90%, #FFFFFF 100%);
 }
 
@@ -47,6 +48,7 @@ h3 {
 header {
     padding: 20px;
     display: flex;
+    gap: 20px;
     align-items: center;
     justify-content: space-between;
     background: none;
@@ -191,30 +193,48 @@ footer {
     margin-top: 20px;
 }
 
-/* Media Queries pro mobilní zobrazení */
+/* mobiles */
 
-@media only screen and (max-width: 600px) {
-    .nav-links {
-        max-width: 100%;
+@media only screen and (max-width: 800px) {
+    header {
         flex-direction: column;
         align-items: center;
-        /* padding: 0 10px; */
     }
-}
 
-@media only screen and (max-width: 600px) {
+    .logo-container {
+        margin-bottom: 10px;
+    }
+
+    .nav-links ul {
+        max-width: 100%;
+        gap: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .main-content {
+        margin: 0;
+    }
+
     .main-text {
         width: 100%;
         max-width: 100%;
         padding: 0 10px;
     }
+
+    .quote {
+        margin-top: 0;
+    }
 }
 
+/* tablets and larger screens */
 
-@media (max-width: 600px) {
-    .main-text {
-        max-width: 100%;
-        padding: 0 10px;
-        /* případně nastavit menší padding */
+@media only screen and (min-width: 800px) {
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: var(--header-bg-color);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     }
 }
