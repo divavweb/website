@@ -138,6 +138,42 @@ test("contact details are consistent and JSON-LD parses with supported local ent
     assert.doesNotMatch(raw, /aggregateRating|review|openingHours|memberOf|priceRange/i);
 });
 
+test("professional name, membership, training and contact options match the current owner-supplied details", async () => {
+    const fullName = "PhDr. Mgr. Ing. Dita Vávrová, MBA";
+    for (const page of pages) {
+        const html = await read(page);
+        assert.match(html, new RegExp(`<span class="brand-name">${fullName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</span>`), `${page}: branding`);
+        assert.match(html, new RegExp(`<strong>${fullName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</strong>`), `${page}: footer`);
+        assert.doesNotMatch(html, /PhDr\. Ing\. Dita Vávrová, MBA/, `${page}: outdated full name`);
+        assert.doesNotMatch(html, /WhatsApp|wa\.me|api\.whatsapp\.com|whatsapp:\/\//i, `${page}: no WhatsApp contact`);
+    }
+
+    const about = await read("pages/omne.html");
+    assert.match(about, /<h1>PhDr\. Mgr\. Ing\. Dita Vávrová, MBA<\/h1>/);
+    assert.match(about, /řádnou členkou České asociace pro psychoterapii/);
+    assert.doesNotMatch(about, /kandidátní členkou|Psychoterapeutka ve výcviku|CAP_logo/i);
+    assert.match(about, /psychoterapeutický výcvik v přístupu zaměřeném na řešení \(Solution Focused\) a hypnoterapeutický výcvik/);
+    const capLink = about.match(/<a class="membership-link"([^>]*)>([\s\S]*?)<\/a>/i);
+    assert.ok(capLink, "ČAP is represented by an association link instead of the outdated badge");
+    assert.match(capLink[1], /href="https:\/\/www\.czap\.cz\/"/);
+    assert.match(capLink[1], /target="_blank"/);
+    assert.match(capLink[1], /rel="noopener noreferrer"/);
+    assert.match(about, /<img src="\.\.\/images\/CMPS_logo\.webp"/, "the other association logo is unchanged");
+
+    const contact = await read("pages/kontakt.html");
+    assert.match(contact, /telefon: <strong><a href="tel:\+420606096129">606&nbsp;096&nbsp;129<\/a><\/strong>/);
+    assert.match(contact, /Google Meet, Zoom nebo telefonicky/);
+
+    const homepage = await read("index.html");
+    const raw = homepage.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/i)?.[1];
+    const graph = JSON.parse(raw)["@graph"];
+    assert.ok(graph.some((node) => node["@type"] === "LocalBusiness" && node.name === fullName));
+    assert.ok(graph.some((node) => node["@type"] === "Person" && node.name === fullName && node.honorificPrefix === "PhDr. Mgr. Ing."));
+
+    const aboutDescription = about.match(/<meta\s+name="description"\s+content="([^"]+)"/i)?.[1];
+    assert.ok(aboutDescription.length >= 120 && aboutDescription.length <= 160, "updated description stays within SEO length guidance");
+});
+
 test("pages use semantic landmarks and avoid inline or remote executable code", async () => {
     for (const page of pages) {
         const html = await read(page);

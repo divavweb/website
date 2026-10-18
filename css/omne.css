@@ -36,7 +36,8 @@
 }
 
 /* Loga profesních společností jsou navržena pro bílé pozadí, proto zůstává bílé i v tmavé paletě. */
-.memberships img {
+.memberships img,
+.membership-link {
     display: block;
     width: 7.5rem;
     height: 7.5rem;
@@ -44,4 +45,20 @@
     border-radius: var(--radius-leaf-small);
     background: #fff;
     box-shadow: var(--shadow-soft);
+}
+
+.membership-link {
+    display: grid;
+    place-content: center;
+    color: #174b8b;
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
+    text-decoration: none;
+}
+
+.membership-link:hover,
+.membership-link:focus-visible {
+    text-decoration: underline;
 }

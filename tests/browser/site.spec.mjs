@@ -61,6 +61,27 @@ test("all pages fit target viewport widths, including with all service disclosur
     expect(missing).toEqual([]);
 });
 
+test("About page presents ČAP membership without the outdated training badge at desktop and mobile widths", async ({ page }) => {
+    await routeSite(page.context());
+    await page.addInitScript(() => localStorage.removeItem("divav-theme"));
+    const link = page.locator(".membership-link");
+    for (const width of [375, 1024]) {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(`${siteOrigin}/pages/omne.html`);
+        await expect(link).toBeVisible();
+        await expect(link).toHaveAttribute("href", "https://www.czap.cz/");
+        await expect(page.locator(".memberships img")).toHaveAttribute("src", "../images/CMPS_logo.webp");
+        const box = await link.boundingBox();
+        expect(box?.width).toBeGreaterThanOrEqual(120);
+        expect(box?.width).toBeLessThanOrEqual(width);
+        expect(box?.height).toBeGreaterThanOrEqual(120);
+        await expect(page.locator("html")).toHaveAttribute("data-theme", "day");
+        await page.locator(".theme-toggle").click();
+        await expect(page.locator("html")).toHaveAttribute("data-theme", "night");
+        await expect(link).toBeVisible();
+    }
+});
+
 test("navigation and disclosure controls meet 44px touch target dimensions", async ({ page }) => {
     await routeSite(page.context());
     for (const width of [320, 375, 768, 1024]) {
