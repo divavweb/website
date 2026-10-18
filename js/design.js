@@ -13,8 +13,8 @@
         nightPalette: 5,
         tulipAnimation: 1,
         tulipAppearance: 1,
-        themeToggleVariant: 1,
-        themeToggleHillVariant: 1,
+        themeToggleVariant: 4,
+        themeToggleHillVariant: 3,
         themeToggleAppearance: "illustrated"
     };
     const storageKey = "divav-theme";
