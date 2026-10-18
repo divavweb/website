@@ -17,6 +17,51 @@
     --radius-leaf: 2.25rem 0.6rem;
     --radius-leaf-small: 1.5rem 0.45rem;
     --shadow-soft: 0 1.25rem 2.5rem -1.75rem rgb(30 15 10 / 0.55);
+    --theme-transition-full:
+        --color-page 480ms ease-in-out,
+        --color-glow-1 480ms ease-in-out,
+        --color-glow-2 480ms ease-in-out,
+        --color-surface 480ms ease-in-out,
+        --color-surface-soft 480ms ease-in-out,
+        --color-ink 480ms ease-in-out,
+        --color-muted 480ms ease-in-out,
+        --color-heading 480ms ease-in-out,
+        --color-primary 480ms ease-in-out,
+        --color-primary-hover 480ms ease-in-out,
+        --color-on-primary 480ms ease-in-out,
+        --color-accent 480ms ease-in-out,
+        --color-border 480ms ease-in-out,
+        --color-focus 480ms ease-in-out,
+        --color-footer 480ms ease-in-out,
+        --color-on-footer 480ms ease-in-out,
+        --color-footer-link 480ms ease-in-out,
+        --color-link 480ms ease-in-out,
+        --color-link-hover 480ms ease-in-out,
+        --tulip-petal 480ms ease-in-out,
+        --tulip-petal-light 480ms ease-in-out,
+        --tulip-petal-deep 480ms ease-in-out,
+        --tulip-leaf 480ms ease-in-out,
+        --tulip-leaf-deep 480ms ease-in-out,
+        --tulip-pollen 480ms ease-in-out;
+    --theme-transition-bridge:
+        --color-page 480ms ease-in-out,
+        --color-glow-1 480ms ease-in-out,
+        --color-glow-2 480ms ease-in-out,
+        --color-surface 480ms ease-in-out,
+        --color-surface-soft 480ms ease-in-out,
+        --color-accent 480ms ease-in-out,
+        --color-border 480ms ease-in-out,
+        --color-focus 480ms ease-in-out,
+        --color-footer 480ms ease-in-out,
+        --color-on-footer 480ms ease-in-out,
+        --color-footer-link 480ms ease-in-out,
+        --tulip-petal 480ms ease-in-out,
+        --tulip-petal-light 480ms ease-in-out,
+        --tulip-petal-deep 480ms ease-in-out,
+        --tulip-leaf 480ms ease-in-out,
+        --tulip-leaf-deep 480ms ease-in-out,
+        --tulip-pollen 480ms ease-in-out;
+    transition: var(--theme-transition-full);
     /* Obrys tulipánu (nadpisy, citáty, seznam služeb) a vlnitý stonek pod hlavičkou. */
     --tulip-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 32'%3E%3Cpath d='M12 30C6 30 2.5 25.5 2.5 19V7.5l5 4.5L12 4l4.5 8 5-4.5V19c0 6.5-3.5 11-9.5 11z'/%3E%3C/svg%3E");
     --vine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M0 6c10-5.5 20-5.5 30 0s20 5.5 30 0 20-5.5 30 0 20 5.5 30 0' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E");
@@ -123,13 +168,13 @@ figure {
 }
 
 a {
-    color: var(--color-primary);
+    color: var(--color-link);
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.2em;
 }
 
 a:hover {
-    color: var(--color-primary-hover);
+    color: var(--color-link-hover);
     text-decoration-thickness: 0.14em;
 }
 
@@ -258,6 +303,345 @@ a:hover {
 .site-nav a[aria-current="page"] {
     background: var(--color-primary);
     color: var(--color-on-primary);
+}
+
+.theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--color-ink);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle[hidden] {
+    display: none;
+}
+
+.theme-toggle-scene {
+    display: block;
+    width: 48px;
+    height: 48px;
+    overflow: visible;
+    transition: transform 220ms ease, filter 220ms ease;
+}
+
+.theme-toggle:hover .theme-toggle-scene {
+    transform: translateY(-1px);
+    filter: drop-shadow(0 2px 3px rgb(48 37 22 / 0.22));
+}
+
+.theme-toggle:active .theme-toggle-scene {
+    transform: translateY(1px) scale(0.97);
+}
+
+.toggle-sun,
+.toggle-moon {
+    transition: opacity 420ms ease, transform 480ms cubic-bezier(0.2, 0.7, 0.25, 1);
+    transform-origin: center;
+}
+
+.toggle-sun {
+    fill: #f5b735;
+    opacity: 1;
+}
+
+.toggle-moon {
+    fill: #e6d5a3;
+    opacity: 0;
+    transform: translate(8px, 5px) rotate(-28deg);
+}
+
+.toggle-hill {
+    fill: var(--color-primary);
+    opacity: 0.78;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+
+.toggle-hill-line {
+    fill: none;
+    stroke: var(--color-on-primary);
+    stroke-linecap: round;
+    stroke-width: 1;
+    opacity: 0.56;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+
+.toggle-hill-arch {
+    display: none;
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-linecap: round;
+    stroke-width: 3.2;
+    opacity: 0.72;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+
+.theme-toggle[data-hill-variant="2"] .toggle-hill,
+.theme-toggle[data-hill-variant="2"] .toggle-hill-line,
+.theme-toggle[data-hill-variant="3"] .toggle-hill,
+.theme-toggle[data-hill-variant="3"] .toggle-hill-line,
+.theme-toggle[data-hill-variant="3"] .toggle-hill-arch {
+    display: none;
+}
+
+/*
+ * Keep text and filled navigation controls readable while light/dark surfaces
+ * cross their midtones; only the decorative/background tokens interpolate.
+ */
+:root[data-theme-transition$="to-night"] {
+    --color-primary: #6a5114;
+    --color-primary-hover: #54400e;
+    --color-on-primary: #ffffff;
+}
+
+:root[data-theme-transition$="to-day"] {
+    --color-primary: #f2a86f;
+    --color-primary-hover: #f7bf8f;
+    --color-on-primary: #231c26;
+}
+
+:root[data-theme-transition^="dark-bridge"] {
+    --color-ink: #111111;
+    --color-muted: #111111;
+    --color-heading: #111111;
+    --color-link: #111111;
+    --color-link-hover: #111111;
+}
+
+:root[data-theme-transition^="light-bridge"] {
+    --color-ink: #ffffff;
+    --color-muted: #ffffff;
+    --color-heading: #ffffff;
+    --color-link: #ffffff;
+    --color-link-hover: #ffffff;
+}
+
+:root[data-theme-transition],
+:root[data-theme-transition="settle"] {
+    transition: var(--theme-transition-bridge);
+}
+
+/* Kopce 1 – současný kopeček se dvěma vlnivými liniemi */
+.theme-toggle[data-hill-variant="1"] .toggle-hill,
+.theme-toggle[data-hill-variant="1"] .toggle-hill-line {
+    display: block;
+}
+
+/* Kopce 2 – samostatný oblouk */
+.theme-toggle[data-hill-variant="2"] .toggle-hill-arch {
+    display: block;
+}
+
+/* Kopce 3 – bez kopce */
+.theme-toggle[data-hill-variant="3"] .toggle-hill,
+.theme-toggle[data-hill-variant="3"] .toggle-hill-line,
+.theme-toggle[data-hill-variant="3"] .toggle-hill-arch {
+    display: none;
+}
+
+.toggle-flower {
+    color: var(--tulip-petal);
+    transition: transform 320ms ease, filter 320ms ease;
+}
+
+.toggle-stem {
+    fill: none;
+    stroke: var(--tulip-leaf-deep);
+    stroke-linecap: round;
+    stroke-width: 2.5;
+}
+
+.toggle-leaf {
+    fill: var(--tulip-leaf);
+    stroke: var(--tulip-leaf-deep);
+    stroke-linejoin: round;
+    stroke-width: 0.8;
+}
+
+.toggle-open-flower,
+.toggle-closed-flower {
+    fill: var(--tulip-petal);
+    stroke: var(--tulip-petal-deep);
+    stroke-linejoin: round;
+    stroke-width: 0.8;
+    transition: opacity 240ms ease, transform 320ms ease;
+    transform-origin: 32px 25px;
+}
+
+.toggle-petal-center {
+    fill: var(--tulip-petal-light);
+}
+
+.toggle-closed-flower {
+    opacity: 0;
+    transform: scale(0.72);
+}
+
+.toggle-dew {
+    fill: #e9f7ff;
+    stroke: #8cc6d8;
+    stroke-width: 0.5;
+    opacity: 0;
+}
+
+.toggle-fireflies {
+    fill: #ffdf70;
+    opacity: 0;
+    filter: drop-shadow(0 0 3px #ffd34f);
+}
+
+.theme-toggle[data-theme="night"] .toggle-sun {
+    opacity: 0;
+    transform: translate(-7px, 5px) scale(0.7);
+}
+
+.theme-toggle[data-theme="night"] .toggle-moon {
+    opacity: 1;
+    transform: translate(0) rotate(0);
+}
+
+/* Varianta 1 – Rozkvetlý květ / poupě */
+.theme-toggle[data-toggle-variant="1"][data-theme="night"] .toggle-open-flower {
+    opacity: 0;
+    transform: scale(0.72);
+}
+
+.theme-toggle[data-toggle-variant="1"][data-theme="night"] .toggle-closed-flower {
+    opacity: 1;
+    transform: scale(1) rotate(4deg);
+}
+
+/* Varianta 2 – Silueta a statické světlušky */
+.theme-toggle[data-toggle-variant="2"][data-theme="night"] .toggle-flower,
+.theme-toggle[data-toggle-variant="3"][data-theme="night"] .toggle-flower {
+    filter: brightness(0.2) saturate(0.35);
+}
+
+.theme-toggle[data-toggle-variant="2"][data-theme="night"] .toggle-fireflies,
+.theme-toggle[data-toggle-variant="3"][data-theme="night"] .toggle-fireflies {
+    opacity: 1;
+}
+
+/* Varianta 3 – Silueta a pulzující světlušky */
+.theme-toggle[data-toggle-variant="3"][data-theme="night"] .toggle-fireflies circle {
+    animation: firefly-glow 3.8s ease-in-out infinite alternate;
+}
+
+.theme-toggle[data-toggle-variant="3"][data-theme="night"] .toggle-fireflies circle:nth-child(2) {
+    animation-delay: 1.2s;
+}
+
+.theme-toggle[data-toggle-variant="3"][data-theme="night"] .toggle-fireflies circle:nth-child(3) {
+    animation-delay: 2.1s;
+}
+
+/* Varianta 4 – Rosa a chladnější měsíční světlo */
+.theme-toggle[data-toggle-variant="4"] .toggle-dew {
+    opacity: 0.9;
+}
+
+.theme-toggle[data-toggle-variant="4"][data-theme="night"] .toggle-open-flower,
+.theme-toggle[data-toggle-variant="4"][data-theme="night"] .toggle-closed-flower {
+    fill: #b8bfd0;
+    stroke: #828aa0;
+}
+
+.theme-toggle[data-toggle-variant="4"][data-theme="night"] .toggle-petal-center {
+    fill: #d5d8e5;
+}
+
+.theme-toggle[data-toggle-variant="4"][data-theme="night"] .toggle-leaf {
+    fill: #70877b;
+}
+
+.theme-toggle[data-toggle-variant="4"][data-theme="night"] .toggle-stem {
+    stroke: #607969;
+}
+
+/* Varianta 5 – Tmavě vínový noční tulipán */
+.theme-toggle[data-toggle-variant="5"][data-theme="night"] .toggle-open-flower,
+.theme-toggle[data-toggle-variant="5"][data-theme="night"] .toggle-closed-flower {
+    fill: #32151f;
+    stroke: #160d14;
+}
+
+.theme-toggle[data-toggle-variant="5"][data-theme="night"] .toggle-petal-center {
+    fill: #592334;
+}
+
+/* Varianta 6 – Slunce/měsíc bez obloukového pohybu */
+.theme-toggle[data-toggle-variant="6"] .toggle-sun,
+.theme-toggle[data-toggle-variant="6"] .toggle-moon {
+    transition: none;
+}
+
+/* Varianta 7 – Slunce/měsíc po krátkém oblouku */
+.theme-toggle[data-toggle-variant="7"] .toggle-sun,
+.theme-toggle[data-toggle-variant="7"] .toggle-moon {
+    transition: opacity 420ms ease, transform 580ms cubic-bezier(0.25, 0.75, 0.3, 1);
+}
+
+.theme-toggle[data-toggle-variant="7"][data-theme="night"] .toggle-moon {
+    transform: translate(0, 0) rotate(0);
+}
+
+.theme-toggle[data-toggle-variant="7"][data-theme="day"] .toggle-moon {
+    transform: translate(8px, 5px) rotate(-28deg);
+}
+
+.theme-toggle[data-toggle-variant="7"][data-theme="night"] .toggle-sun {
+    transform: translate(-7px, 5px) scale(0.7);
+}
+
+.theme-toggle[data-toggle-variant="7"][data-theme="day"] .toggle-sun {
+    transform: translate(0) scale(1);
+}
+
+@keyframes firefly-glow {
+    from { opacity: 0.58; }
+    to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        transition-duration: 0.01ms !important;
+    }
+
+    .theme-toggle-scene,
+    .toggle-sun,
+    .toggle-moon,
+    .toggle-flower,
+    .toggle-open-flower,
+    .toggle-closed-flower {
+        transition-duration: 0.01ms !important;
+    }
+
+    .theme-toggle[data-toggle-variant="3"] .toggle-fireflies circle {
+        animation: none !important;
+    }
+}
+
+:root[data-preview-reduced-motion="true"],
+:root[data-preview-reduced-motion="true"] .theme-toggle-scene,
+:root[data-preview-reduced-motion="true"] .toggle-sun,
+:root[data-preview-reduced-motion="true"] .toggle-moon,
+:root[data-preview-reduced-motion="true"] .toggle-flower,
+:root[data-preview-reduced-motion="true"] .toggle-open-flower,
+:root[data-preview-reduced-motion="true"] .toggle-closed-flower {
+    transition-duration: 0.01ms !important;
+}
+
+:root[data-preview-reduced-motion="true"] .theme-toggle[data-toggle-variant="3"] .toggle-fireflies circle {
+    animation: none !important;
 }
 
 @media (min-width: 64rem) {
@@ -421,12 +805,20 @@ main h2::before {
 
 .button--quiet {
     background: transparent;
-    color: var(--color-primary);
+    color: var(--color-link);
 }
 
 .button--quiet:hover {
     background: var(--color-surface-soft);
-    color: var(--color-primary-hover);
+    color: var(--color-link-hover);
+}
+
+:root[data-theme-transition] .button {
+    transition: border-radius 350ms ease;
+}
+
+:root[data-theme-transition] .tulip-toggle {
+    transition: transform 300ms ease;
 }
 
 .actions {

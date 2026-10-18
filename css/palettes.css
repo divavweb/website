@@ -1,13 +1,39 @@
 /*
  * Barevné palety webu (sémantické barevné proměnné).
  *
- * Aktivní paleta se NEMĚNÍ zde, ale v souboru js/design.js (colorPalette).
+ * Denní/noční palety se mapují v js/design.js (dayPalette/nightPalette).
  * Každá paleta musí definovat všechny proměnné jako paleta 1 – automatické
  * testy (npm test) kontrolují úplnost i kontrast textu.
  *
  * Nová paleta: zkopírujte celý blok poslední palety, změňte číslo
  * v [data-palette="…"] a barvy, pak nastavte číslo v js/design.js.
  */
+
+@property --color-page { syntax: "<color>"; inherits: true; initial-value: #fff8f0; }
+@property --color-glow-1 { syntax: "<color>"; inherits: true; initial-value: #ffe3c8; }
+@property --color-glow-2 { syntax: "<color>"; inherits: true; initial-value: #ffdfe4; }
+@property --color-surface { syntax: "<color>"; inherits: true; initial-value: #fffdf9; }
+@property --color-surface-soft { syntax: "<color>"; inherits: true; initial-value: #fdebdc; }
+@property --color-ink { syntax: "<color>"; inherits: true; initial-value: #3b2c27; }
+@property --color-muted { syntax: "<color>"; inherits: true; initial-value: #6a554d; }
+@property --color-heading { syntax: "<color>"; inherits: true; initial-value: #2f5a35; }
+@property --color-primary { syntax: "<color>"; inherits: true; initial-value: #3a6b3f; }
+@property --color-primary-hover { syntax: "<color>"; inherits: true; initial-value: #2c5532; }
+@property --color-on-primary { syntax: "<color>"; inherits: true; initial-value: #ffffff; }
+@property --color-link { syntax: "<color>"; inherits: true; initial-value: #3a6b3f; }
+@property --color-link-hover { syntax: "<color>"; inherits: true; initial-value: #2c5532; }
+@property --color-accent { syntax: "<color>"; inherits: true; initial-value: #a8322b; }
+@property --color-border { syntax: "<color>"; inherits: true; initial-value: #ecd5c3; }
+@property --color-focus { syntax: "<color>"; inherits: true; initial-value: #1f5f8b; }
+@property --color-footer { syntax: "<color>"; inherits: true; initial-value: #2f4a30; }
+@property --color-on-footer { syntax: "<color>"; inherits: true; initial-value: #fbf3e8; }
+@property --color-footer-link { syntax: "<color>"; inherits: true; initial-value: #ffd6b0; }
+@property --tulip-petal { syntax: "<color>"; inherits: true; initial-value: #e2453c; }
+@property --tulip-petal-light { syntax: "<color>"; inherits: true; initial-value: #f0705f; }
+@property --tulip-petal-deep { syntax: "<color>"; inherits: true; initial-value: #a92a33; }
+@property --tulip-leaf { syntax: "<color>"; inherits: true; initial-value: #6aa860; }
+@property --tulip-leaf-deep { syntax: "<color>"; inherits: true; initial-value: #3f7a3f; }
+@property --tulip-pollen { syntax: "<color>"; inherits: true; initial-value: #f2c14e; }
 
 /* 1 – Warm Tulip: krémový podklad, meruňková záře, zelené listy, červené tulipány (výchozí) */
 :root,
@@ -24,6 +50,8 @@
     --color-primary: #3a6b3f;
     --color-primary-hover: #2c5532;
     --color-on-primary: #ffffff;
+    --color-link: #3a6b3f;
+    --color-link-hover: #2c5532;
     --color-accent: #a8322b;
     --color-border: #ecd5c3;
     --color-focus: #1f5f8b;
@@ -52,6 +80,8 @@
     --color-primary: #336150;
     --color-primary-hover: #264c3e;
     --color-on-primary: #ffffff;
+    --color-link: #336150;
+    --color-link-hover: #264c3e;
     --color-accent: #8b4f33;
     --color-border: #d3dfcc;
     --color-focus: #1d4f7a;
@@ -80,6 +110,8 @@
     --color-primary: #743763;
     --color-primary-hover: #5c2a4f;
     --color-on-primary: #ffffff;
+    --color-link: #743763;
+    --color-link-hover: #5c2a4f;
     --color-accent: #a3305f;
     --color-border: #ecd3dc;
     --color-focus: #244b80;
@@ -108,6 +140,8 @@
     --color-primary: #6a5114;
     --color-primary-hover: #54400e;
     --color-on-primary: #ffffff;
+    --color-link: #6a5114;
+    --color-link-hover: #54400e;
     --color-accent: #8f4f10;
     --color-border: #ead9ad;
     --color-focus: #1d4f7a;
@@ -136,6 +170,8 @@
     --color-primary: #f2a86f;
     --color-primary-hover: #f7bf8f;
     --color-on-primary: #231c26;
+    --color-link: #f2a86f;
+    --color-link-hover: #f7bf8f;
     --color-accent: #f4a3a0;
     --color-border: #4a3b4e;
     --color-focus: #9cd2ff;

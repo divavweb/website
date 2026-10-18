@@ -58,7 +58,7 @@ test("public pages have unique metadata, canonical URLs, language and valid head
         assert.equal(canonical, expectedPaths[page], `${page}: canonical preserves its public URL`);
         assert.equal(html.match(/<meta\s+name="robots"\s+content="([^"]+)"/i)?.[1], "index, follow, max-image-preview:large");
         assert.equal(html.match(/<meta\s+property="og:url"\s+content="([^"]+)"/i)?.[1], canonical);
-        assert.match(html, /<html lang="cs">/i);
+        assert.match(html, /<html lang="cs"(?:\s|>)/i);
         assert.equal((html.match(/<h1(?:\s|>)/gi) || []).length, 1, `${page}: one H1`);
         let previous = 0;
         for (const [, rawLevel] of html.matchAll(/<h([1-6])(?:\s|>)/gi)) {
@@ -179,7 +179,8 @@ test("all palette token sets are complete and contrast meets WCAG AA pairs", asy
         assert.deepEqual(Object.keys(tokens).sort(), tokenKeys, `palette ${id} token set`);
         for (const background of ["color-page", "color-surface"]) {
             assert.ok(contrast(tokens["color-ink"], tokens[background]) >= 4.5, `palette ${id}: body text`);
-            assert.ok(contrast(tokens["color-primary"], tokens[background]) >= 4.5, `palette ${id}: links`);
+            assert.ok(contrast(tokens["color-link"], tokens[background]) >= 4.5, `palette ${id}: links`);
+            assert.ok(contrast(tokens["color-link-hover"], tokens[background]) >= 4.5, `palette ${id}: hovered links`);
             assert.ok(contrast(tokens["color-muted"], tokens[background]) >= 4.5, `palette ${id}: secondary text`);
         }
         assert.ok(contrast(tokens["color-on-primary"], tokens["color-primary"]) >= 4.5, `palette ${id}: button text`);
@@ -203,13 +204,55 @@ test("CSS custom properties are defined and every appearance/animation variant e
     assert.deepEqual(readVariants(tulipsCss, "appearance", /(\d+)\s*=\s*([^,*\n]+)/g).map((item) => item.id), [1, 2]);
     const design = await read("js/design.js");
     for (const [key, available] of [
-        ["colorPalette", [1, 2, 3, 4, 5]],
+        ["dayPalette", [1, 2, 3, 4, 5]],
+        ["nightPalette", [1, 2, 3, 4, 5]],
         ["tulipAnimation", [1, 2, 3, 4]],
-        ["tulipAppearance", [1, 2]]
+        ["tulipAppearance", [1, 2]],
+        ["themeToggleVariant", [1, 2, 3, 4, 5, 6, 7]],
+        ["themeToggleHillVariant", [1, 2, 3]]
     ]) {
         const value = Number(design.match(new RegExp(`${key}:\\s*(\\d+)`))?.[1]);
         assert.ok(available.includes(value), `configured ${key} ${value} exists`);
     }
+});
+
+test("day/night configuration maps to palettes 4 and 5 and all pages include an accessible scene toggle", async () => {
+    const design = await read("js/design.js");
+    assert.match(design, /defaultTheme:\s*"day"/);
+    assert.match(design, /dayPalette:\s*4/);
+    assert.match(design, /nightPalette:\s*5/);
+    assert.match(design, /themeToggleVariant:\s*1/);
+    assert.match(design, /themeToggleHillVariant:\s*1/);
+    assert.match(design, /themeToggleAppearance:\s*"illustrated"/);
+    assert.match(design, /localStorage\.getItem\(storageKey\)/);
+    assert.match(design, /localStorage\.setItem\(storageKey,\s*nextTheme\)/);
+    assert.match(design, /catch\s*\{/);
+
+    for (const page of pages) {
+        const html = await read(page);
+        assert.match(html, /<html lang="cs" data-theme="day" data-palette="4"/);
+        const buttons = [...html.matchAll(/<button class="theme-toggle"([^>]*)>([\s\S]*?)<\/button>/gi)];
+        assert.equal(buttons.length, 1, `${page}: one theme toggle`);
+        assert.match(buttons[0][1], /aria-label="Přepnout na noční režim"/);
+        assert.match(buttons[0][1], /aria-pressed="false"/);
+        assert.match(buttons[0][2], /<svg[^>]+aria-hidden="true"/);
+        assert.match(buttons[0][2], /class="toggle-hill"/);
+        assert.match(buttons[0][2], /class="toggle-open-flower"/);
+        assert.match(buttons[0][2], /class="toggle-closed-flower"/);
+        assert.match(buttons[0][2], /class="toggle-hill-arch"/);
+    }
+
+    const css = await read("css/styles.css");
+    const variants = readVariants(css, "toggle-variant", /\/\*\s*Varianta\s+(\d+)\s*–\s*([^*]+?)\s*\*\//g);
+    assert.deepEqual(variants.map((item) => item.id), [1, 2, 3, 4, 5, 6, 7]);
+    assert.ok(variants.every((item) => item.name.length > 0), "every variant has a preview label");
+    assert.match(css, /prefers-reduced-motion:\s*reduce/);
+    assert.match(css, /firefly-glow/);
+    assert.match(css, /mask-image:\s*linear-gradient\(90deg,\s*transparent/);
+    assert.match(css, /--color-page\s+480ms/);
+    assert.match(css, /data-theme-transition\^="dark-bridge"/);
+    assert.match(await read("css/palettes.css"), /@property --color-page/);
+    assert.doesNotMatch(css, /prefers-color-scheme/i);
 });
 
 test("service disclosure content is native, complete and linked from the homepage", async () => {
@@ -251,4 +294,13 @@ test("preview handler enforces local host, read-only methods, path containment a
     assert.equal((await request("/%")).status, 400);
     assert.equal((await request("/__design-matrix")).status, 200);
     assert.equal((await request("/__design-preview")).status, 200);
+    const toggleMatrix = await request("/__theme-toggle-matrix");
+    assert.equal(toggleMatrix.status, 200);
+    for (let variant = 1; variant <= 7; variant += 1) {
+        assert.match(toggleMatrix.body, new RegExp(`data-toggle-variant="${variant}"`));
+    }
+    for (let hill = 1; hill <= 3; hill += 1) {
+        assert.match(toggleMatrix.body, new RegExp(`data-hill-variant="${hill}"`));
+    }
+    assert.equal((toggleMatrix.body.match(/class="toggle-preview-card"/g) ?? []).length, 21);
 });

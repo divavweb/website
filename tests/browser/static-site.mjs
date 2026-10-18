@@ -10,7 +10,7 @@ export const siteRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)
 export const siteOrigin = "https://divav.test";
 export const localPreviewOrigin = "http://localhost:4173";
 
-const designKeys = ["colorPalette", "tulipAnimation", "tulipAppearance"];
+const designKeys = ["dayPalette", "nightPalette", "tulipAnimation", "tulipAppearance", "themeToggleVariant", "themeToggleHillVariant"];
 const previewHandler = createPreviewHandler({ port: 4173 });
 
 /** Returns js/design.js with the given configuration values, exactly as the owner would edit it. */

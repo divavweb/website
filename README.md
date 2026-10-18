@@ -25,7 +25,7 @@ npm ci
 npm run preview
 ```
 
-Otevřete `http://127.0.0.1:4173/__design-preview` pro výběr stránky a variant nebo `http://127.0.0.1:4173/__design-matrix` pro matici všech tulipánů. Server poslouchá pouze na loopback rozhraní. Po dokončení jej zastavte pomocí `Ctrl+C`.
+Otevřete `http://127.0.0.1:4173/__design-preview` pro výběr stránky a variant, `http://127.0.0.1:4173/__design-matrix` pro matici obsahových tulipánů nebo `http://127.0.0.1:4173/__theme-toggle-matrix` pro sedm vzhledů denního/nočního přepínače. Server poslouchá pouze na loopback rozhraní. Po dokončení jej zastavte pomocí `Ctrl+C`.
 
 Playwright používá Chromium. Pokud jeho prohlížeč není nainstalovaný:
 
@@ -59,15 +59,7 @@ Prohlížečové testy obsluhují lokální soubory přes Playwright routing, ta
 
 ## Změna vzhledu
 
-V `js/design.js` změňte právě tři číselné hodnoty. Není zde veřejný přepínač motivu:
-
-```js
-const siteDesign = {
-    colorPalette: 1,
-    tulipAnimation: 1,
-    tulipAppearance: 1
-};
-```
+Trvalá konfigurace designu je v `js/design.js`. Hlavička nabízí návštěvníkům pouze přepínač dne/noci, nikoli veřejný výběr všech pěti palet. Podrobné pokyny pro vlastníka jsou v lokálních manuálech `privateNotOnGitHub/`, které se nepublikují ani nesledují v Gitu.
 
 **Palety:** 1 Warm Tulip, 2 Soft Sage, 3 Blush & Plum, 4 Golden Calm, 5 Evening Warmth. Celé sady proměnných jsou v `css/palettes.css`. Nová paleta musí definovat všechny existující barevné tokeny, splnit kontrastní požadavky a být doplněna do komentáře konfigurace a testů.
 

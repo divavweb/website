@@ -66,7 +66,7 @@ test("navigation and disclosure controls meet 44px touch target dimensions", asy
     for (const width of [320, 375, 768, 1024]) {
         await page.setViewportSize({ width, height: 900 });
         await page.goto(`${siteOrigin}/pages/sluzby.html`);
-        const targets = await page.locator(".site-nav a, details.tulip summary, .button").evaluateAll((elements) =>
+        const targets = await page.locator(".site-nav a, .site-nav button, details.tulip summary, .button").evaluateAll((elements) =>
             elements.map((element) => {
                 const box = element.getBoundingClientRect();
                 return { name: element.textContent.trim(), width: box.width, height: box.height };
@@ -125,6 +125,250 @@ test("skip link, keyboard focus, headings, images and embedded-frame fallbacks a
         }
     }
     expect(missing).toEqual([]);
+});
+
+test("day/night mode defaults to Golden Calm and persists manual changes across pages and reloads", async ({ page }) => {
+    await routeSite(page.context());
+    await page.goto(`${siteOrigin}/`);
+    const root = page.locator("html");
+    const toggle = page.locator(".theme-toggle");
+    await expect(root).toHaveAttribute("data-theme", "day");
+    await expect(root).toHaveAttribute("data-palette", "4");
+    await expect(toggle).toHaveAttribute("data-toggle-appearance", "illustrated");
+    await expect(toggle).toHaveAttribute("data-hill-variant", "1");
+    await expect(root).toHaveAttribute("data-animation", "1");
+    await expect(root).toHaveAttribute("data-appearance", "1");
+    await expect(toggle).toBeVisible();
+    await expect(toggle).toHaveAttribute("aria-label", "Přepnout na noční režim");
+    await expect(toggle).toHaveAttribute("aria-pressed", "false");
+
+    await toggle.click();
+    await expect(root).toHaveAttribute("data-theme", "night");
+    await expect(root).toHaveAttribute("data-palette", "5");
+    await expect(root).toHaveAttribute("data-animation", "1");
+    await expect(root).toHaveAttribute("data-appearance", "1");
+    await expect(toggle).toHaveAttribute("aria-label", "Přepnout na denní režim");
+    await expect(toggle).toHaveAttribute("aria-pressed", "true");
+    await expect.poll(() => page.evaluate(() => localStorage.getItem("divav-theme"))).toBe("night");
+
+    await page.goto(`${siteOrigin}/pages/sluzby.html`);
+    await expect(root).toHaveAttribute("data-theme", "night");
+    await expect(root).toHaveAttribute("data-palette", "5");
+    await page.reload();
+    await expect(root).toHaveAttribute("data-theme", "night");
+
+    const nightButton = page.locator(".theme-toggle");
+    await nightButton.focus();
+    await nightButton.press("Space");
+    await expect(root).toHaveAttribute("data-theme", "day");
+    await expect(root).toHaveAttribute("data-palette", "4");
+    await expect(nightButton).toHaveAttribute("aria-label", "Přepnout na noční režim");
+    await expect.poll(() => page.evaluate(() => localStorage.getItem("divav-theme"))).toBe("day");
+    await page.goto(`${siteOrigin}/pages/kontakt.html`);
+    await expect(root).toHaveAttribute("data-theme", "day");
+    await expect(root).toHaveAttribute("data-palette", "4");
+});
+
+test("theme scene is a comfortable touch target on mobile", async ({ testBrowser }) => {
+    const context = await testBrowser.newContext({ viewport: { width: 375, height: 812 }, hasTouch: true });
+    try {
+        await routeSite(context);
+        const page = await context.newPage();
+        await page.goto(`${siteOrigin}/`);
+        const toggle = page.locator(".theme-toggle");
+        const size = await toggle.evaluate((button) => {
+            const rect = button.getBoundingClientRect();
+            return { width: rect.width, height: rect.height };
+        });
+        expect(size.width).toBeGreaterThanOrEqual(44);
+        expect(size.height).toBeGreaterThanOrEqual(44);
+        await toggle.tap();
+        await expect(page.locator("html")).toHaveAttribute("data-theme", "night");
+        await expect(page.locator("html")).toHaveAttribute("data-palette", "5");
+    } finally {
+        await context.close();
+    }
+});
+
+test("theme selection safely falls back when localStorage is blocked or contains an invalid value", async ({ testBrowser }) => {
+    const context = await testBrowser.newContext();
+    try {
+        await context.addInitScript(() => {
+            localStorage.setItem("divav-theme", "all-palettes");
+            Object.defineProperty(window, "localStorage", {
+                configurable: true,
+                get() { throw new Error("storage blocked"); }
+            });
+        });
+        await routeSite(context);
+        const page = await context.newPage();
+        const errors = [];
+        page.on("pageerror", (error) => errors.push(error.message));
+        await page.goto(`${siteOrigin}/`);
+        await expect(page.locator("html")).toHaveAttribute("data-theme", "day");
+        await expect(page.locator("html")).toHaveAttribute("data-palette", "4");
+        await page.locator(".theme-toggle").click();
+        await expect(page.locator("html")).toHaveAttribute("data-theme", "night");
+        await page.evaluate(() => { delete window.localStorage; });
+        await page.goto(`${siteOrigin}/pages/omne.html`);
+        await expect(page.locator("html")).toHaveAttribute("data-theme", "day");
+        expect(errors).toEqual([]);
+    } finally {
+        await context.close();
+    }
+});
+
+test("all seven theme toggle variants render in both states and keep reduced-motion behavior", async ({ page }) => {
+    await routeSite(page.context(), [localPreviewOrigin, siteOrigin]);
+    for (let variant = 1; variant <= 7; variant += 1) {
+        await page.goto(`${localPreviewOrigin}/?preview=1&theme=day&toggleVariant=${variant}`);
+        const root = page.locator("html");
+        const toggle = page.locator(".theme-toggle");
+        await expect(root).toHaveAttribute("data-toggle-variant", String(variant));
+        await expect(toggle).toHaveAttribute("data-toggle-variant", String(variant));
+        await expect(toggle).toHaveAttribute("data-theme", "day");
+        await expect(toggle.locator(".toggle-hill")).toBeVisible();
+        await expect(toggle.locator(".toggle-open-flower")).toBeVisible();
+
+        await toggle.click();
+        await expect(toggle).toHaveAttribute("data-theme", "night");
+        if (variant === 1) {
+            await expect(toggle.locator(".toggle-closed-flower")).toHaveCSS("opacity", "1");
+            await expect(toggle.locator(".toggle-open-flower")).toHaveCSS("opacity", "0");
+        } else if (variant === 2 || variant === 3) {
+            await expect(toggle.locator(".toggle-fireflies")).toHaveCSS("opacity", "1");
+            const animationName = await toggle.locator(".toggle-fireflies circle").first().evaluate((el) => getComputedStyle(el).animationName);
+            expect(animationName).toBe(variant === 3 ? "firefly-glow" : "none");
+        } else if (variant === 4) {
+            await expect(toggle.locator(".toggle-dew").first()).toHaveCSS("opacity", "0.9");
+            await expect(toggle.locator(".toggle-moon")).toHaveCSS("opacity", "1");
+        } else if (variant === 5) {
+            await expect(toggle.locator(".toggle-open-flower path").first()).toHaveCSS("fill", "rgb(50, 21, 31)");
+        } else if (variant === 6) {
+            await expect(toggle.locator(".toggle-sun")).toHaveCSS("transition-duration", "0s");
+        } else {
+            await expect.poll(() => toggle.locator(".toggle-moon").evaluate((element) =>
+                getComputedStyle(element).transitionDuration.split(",").map((duration) => duration.trim())
+            )).toContain("0.58s");
+        }
+        await expect(toggle).toHaveAttribute("aria-disabled", "false");
+        await toggle.click();
+        await expect(toggle).toHaveAttribute("data-theme", "day");
+    }
+
+    for (let hillVariant = 1; hillVariant <= 3; hillVariant += 1) {
+        for (let variant = 1; variant <= 7; variant += 1) {
+            await page.goto(`${localPreviewOrigin}/?preview=1&theme=day&toggleVariant=${variant}&hillVariant=${hillVariant}`);
+            const toggle = page.locator(".theme-toggle");
+            await expect(toggle).toHaveAttribute("data-toggle-appearance", "illustrated");
+            await expect(toggle).toHaveAttribute("data-hill-variant", String(hillVariant));
+            await expect(toggle.locator(".toggle-hill")).toHaveCSS("display", hillVariant === 3 || hillVariant === 2 ? "none" : "block");
+            await expect(toggle.locator(".toggle-hill-line")).toHaveCSS("display", hillVariant === 1 ? "block" : "none");
+            await expect(toggle.locator(".toggle-hill-arch")).toHaveCSS("display", hillVariant === 2 ? "block" : "none");
+            await toggle.click();
+            await expect(toggle).toHaveAttribute("data-theme", "night");
+            await expect(toggle.locator(".toggle-hill-arch")).toHaveCSS("display", hillVariant === 2 ? "block" : "none");
+        }
+    }
+
+    const reduced = await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches);
+    expect(reduced).toBe(false);
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto(`${localPreviewOrigin}/?preview=1&theme=night&toggleVariant=3`);
+    const firefly = page.locator(".toggle-fireflies circle").first();
+    await expect(firefly).toHaveCSS("animation-name", "none");
+    await expect(page.locator(".toggle-moon")).toHaveCSS("transition-duration", "1e-05s");
+});
+
+test("theme palette transitions calmly across the site without layout shifts", async ({ page }) => {
+    await routeSite(page.context());
+    await page.goto(`${siteOrigin}/`);
+    const geometry = () => page.evaluate(() =>
+        [...document.querySelectorAll(".site-header, main, footer")].map((element) => {
+            const rect = element.getBoundingClientRect();
+            return [rect.x, rect.y, rect.width, rect.height];
+        })
+    );
+    const beforeGeometry = await geometry();
+    const before = await page.evaluate(() => ({
+        background: getComputedStyle(document.body).backgroundColor,
+        text: getComputedStyle(document.querySelector(".site-nav a:not([aria-current])")).color
+    }));
+    await page.locator(".theme-toggle").click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "night");
+    await expect(page.locator(".theme-toggle")).toHaveAttribute("aria-disabled", "true");
+    await expect(page.locator(".theme-toggle")).toBeFocused();
+    await page.waitForTimeout(60);
+    const during = await page.evaluate(() => ({
+        background: getComputedStyle(document.body).backgroundColor,
+        text: getComputedStyle(document.querySelector(".site-nav a:not([aria-current])")).color,
+        duration: getComputedStyle(document.documentElement).transitionDuration
+    }));
+    expect(during.background).not.toBe(before.background);
+    expect(during.background).not.toBe("rgb(35, 28, 38)");
+    expect(during.text).not.toBe(before.text);
+    expect(during.duration).toContain("0.48s");
+    const contrast = () => page.evaluate(() => {
+        const luminance = (color) => {
+            const [r, g, b] = color.match(/\d+/g).slice(0, 3).map(Number)
+                .map((channel) => channel / 255)
+                .map((channel) => channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4);
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        };
+        const ratio = (foreground, background) => {
+            const [light, dark] = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
+            return (light + 0.05) / (dark + 0.05);
+        };
+        const bodyColor = getComputedStyle(document.body).backgroundColor;
+        const bodyText = getComputedStyle(document.body).color;
+        const link = document.querySelector(".site-nav a:not([aria-current])");
+        const active = document.querySelector(".site-nav a[aria-current]");
+        const activeStyle = getComputedStyle(active);
+        const cta = getComputedStyle(document.querySelector(".button"));
+        return {
+            body: ratio(bodyText, bodyColor),
+            link: ratio(getComputedStyle(link).color, bodyColor),
+            active: ratio(activeStyle.color, activeStyle.backgroundColor),
+            cta: ratio(cta.color, cta.backgroundColor),
+            heading: ratio(getComputedStyle(document.querySelector("h1")).color, bodyColor)
+        };
+    });
+    expect(await contrast()).toMatchObject({ body: expect.any(Number), link: expect.any(Number), active: expect.any(Number) });
+    expect(Object.values(await contrast()).every((value) => value >= 4.5)).toBe(true);
+
+    await expect(page.locator("html")).toHaveAttribute("data-theme-transition", "light-bridge-to-night");
+    const bridge = await page.evaluate(() => ({
+        phase: document.documentElement.getAttribute("data-theme-transition"),
+        text: getComputedStyle(document.body).color
+    }));
+    expect(bridge).toEqual({ phase: "light-bridge-to-night", text: "rgb(255, 255, 255)" });
+    expect(Object.values(await contrast()).every((value) => value >= 4.5)).toBe(true);
+    await page.locator(".theme-toggle").waitFor({ state: "visible" });
+    await expect(page.locator(".theme-toggle")).toHaveAttribute("aria-disabled", "false", { timeout: 1000 });
+    expect(Object.values(await contrast()).every((value) => value >= 4.5)).toBe(true);
+    expect(await geometry()).toEqual(beforeGeometry);
+
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.locator(".theme-toggle").click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "day");
+    await expect(page.locator("html")).toHaveCSS("transition-duration", /1e-05s/);
+    await expect(page.locator(".theme-toggle")).toHaveAttribute("aria-disabled", "false");
+
+    await page.emulateMedia({ reducedMotion: "no-preference" });
+    await page.locator(".theme-toggle").click();
+    await expect(page.locator(".theme-toggle")).toHaveAttribute("aria-disabled", "false", { timeout: 1000 });
+    await page.locator(".theme-toggle").click();
+    await page.waitForTimeout(60);
+    expect(await page.locator("html").getAttribute("data-theme-transition")).toBe("light-bridge-to-day");
+    expect((await page.evaluate(() => getComputedStyle(document.body).color))).toBe("rgb(255, 255, 255)");
+    expect(Object.values(await contrast()).every((value) => value >= 4.5)).toBe(true);
+    await expect(page.locator("html")).toHaveAttribute("data-theme-transition", "dark-bridge-to-day");
+    expect(await page.locator("html").getAttribute("data-theme-transition")).toBe("dark-bridge-to-day");
+    expect((await page.evaluate(() => getComputedStyle(document.body).color))).toBe("rgb(17, 17, 17)");
+    expect(Object.values(await contrast()).every((value) => value >= 4.5)).toBe(true);
+    await expect(page.locator(".theme-toggle")).toBeEnabled({ timeout: 1000 });
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "day");
+    expect(Object.values(await contrast()).every((value) => value >= 4.5)).toBe(true);
 });
 
 test("every animation and appearance renders and its native disclosure works by mouse and keyboard", async ({ page }) => {
@@ -186,6 +430,9 @@ test("native service disclosures remain usable when JavaScript is disabled", asy
         await routeSite(context);
         const page = await context.newPage();
         await page.goto(servicePage);
+        await expect(page.locator("html")).toHaveAttribute("data-theme", "day");
+        await expect(page.locator("html")).toHaveAttribute("data-palette", "4");
+        await expect(page.locator(".theme-toggle")).toBeHidden();
         const details = page.locator("details.tulip").first();
         await details.locator("summary").click();
         await expect(details).toHaveAttribute("open", "");
@@ -256,9 +503,9 @@ test("all palettes apply, previews are local-only and invalid values are ignored
         expect(ratios.every((value) => value >= 4.5), `palette ${palette}: ${ratios.join(", ")}`).toBeTruthy();
     }
     await page.goto(`${siteOrigin}/?preview=1&palette=3`);
-    await expect(page.locator("html")).toHaveAttribute("data-palette", "1");
+    await expect(page.locator("html")).toHaveAttribute("data-palette", "4");
     await page.goto(`${localPreviewOrigin}/?preview=1&palette=0&animation=abc&appearance=100`);
-    await expect(page.locator("html")).toHaveAttribute("data-palette", "1");
+    await expect(page.locator("html")).toHaveAttribute("data-palette", "4");
     await expect(page.locator("html")).toHaveAttribute("data-animation", "1");
     await expect(page.locator("html")).toHaveAttribute("data-appearance", "1");
 });
@@ -295,6 +542,31 @@ test("design preview and 40-cell matrix controls work", async ({ page }) => {
     await expect(frame.locator("html")).toHaveAttribute("data-animation", "4");
     await page.locator("#appearance").selectOption("2");
     await expect(frame.locator("html")).toHaveAttribute("data-appearance", "2");
+    await page.locator("#toggleVariant").selectOption("7");
+    await expect(frame.locator("html")).toHaveAttribute("data-toggle-variant", "7");
+    await page.locator("#hillVariant").selectOption("3");
+    await expect(frame.locator("html")).toHaveAttribute("data-hill-variant", "3");
+    await page.locator("#palette").selectOption("theme");
+    await page.locator("#theme").selectOption("night");
+    await expect(frame.locator("html")).toHaveAttribute("data-theme", "night");
+    await expect(frame.locator("html")).toHaveAttribute("data-palette", "5");
+    await page.locator("#reducedMotion").check();
+    await expect(frame.locator("html")).toHaveAttribute("data-preview-reduced-motion", "true");
+    await frame.locator(".theme-toggle").click();
+    await expect(frame.locator("html")).toHaveAttribute("data-theme", "day");
+    await expect(frame.locator("html")).not.toHaveAttribute("data-theme-transition");
+
+    await page.goto(`${localPreviewOrigin}/__theme-toggle-matrix`);
+    await expect(page.locator(".toggle-preview-card")).toHaveCount(21);
+    const matrixToggle = page.locator(".toggle-preview-card .theme-toggle").nth(2);
+    await matrixToggle.click();
+    await expect(matrixToggle).toHaveAttribute("data-theme", "night");
+    await page.getByRole("button", { name: "Nastavit všechny na den" }).click();
+    await expect(page.locator(".toggle-preview-card .theme-toggle[data-theme='day']")).toHaveCount(21);
+    await page.getByRole("button", { name: "Nastavit všechny na noc" }).click();
+    await expect(page.locator(".toggle-preview-card .theme-toggle[data-theme='night']")).toHaveCount(21);
+    await page.getByLabel("Omezit pohyb").check();
+    await expect(page.locator("html")).toHaveAttribute("data-preview-reduced-motion", "true");
 });
 
 test("all design combinations have no horizontal overflow at mobile width", async ({ page }) => {
