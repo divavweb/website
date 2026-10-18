@@ -1,254 +1,556 @@
+/*
+ * Společné styly webu divav.cz
+ *
+ * Barvy jsou v css/palettes.css (aktivní paletu volí js/design.js),
+ * tulipány v css/tulips.css a styly jednotlivých stránek v css/index.css,
+ * sluzby.css, omne.css, cenik.css a kontakt.css.
+ * Barvy zde zapisujte pouze přes proměnné palety, např. var(--color-ink).
+ */
+
 :root {
-    --primary-color: #4CAF50;
-    --secondary-color: #FF0000;
-    --text-color: #333;
-    --header-bg-color: #ffcf83;
-    --bg-gradient: linear-gradient(180deg, #FF7043, #FFC680, #FFEC8B, #FFD9E2 90%, #FFFFFF 100%);
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --font-body: "Avenir Next", Avenir, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --gutter: clamp(1rem, 4vw, 2.5rem);
+    --measure: 44rem;
+    --wide: 72rem;
+    --space-section: clamp(3.5rem, 8vw, 6rem);
+    --radius-leaf: 2.25rem 0.6rem;
+    --radius-leaf-small: 1.5rem 0.45rem;
+    --shadow-soft: 0 1.25rem 2.5rem -1.75rem rgb(30 15 10 / 0.55);
+    /* Obrys tulipánu (nadpisy, citáty, seznam služeb) a vlnitý stonek pod hlavičkou. */
+    --tulip-glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 32'%3E%3Cpath d='M12 30C6 30 2.5 25.5 2.5 19V7.5l5 4.5L12 4l4.5 8 5-4.5V19c0 6.5-3.5 11-9.5 11z'/%3E%3C/svg%3E");
+    --vine: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M0 6c10-5.5 20-5.5 30 0s20 5.5 30 0 20-5.5 30 0 20 5.5 30 0' fill='none' stroke='%23000' stroke-width='1.4'/%3E%3C/svg%3E");
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
-    padding: 0;
-    background: var(--bg-gradient);
-    background-size: 400% 400%;
-    animation: gradientShift 10s ease infinite;
-    color: var(--text-color);
+    font-family: var(--font-body);
+    font-size: clamp(1.0625rem, 1rem + 0.2vw, 1.1875rem);
+    line-height: 1.65;
+    color: var(--color-ink);
+    background-color: var(--color-page);
+    background-image:
+        radial-gradient(ellipse 60rem 38rem at 105% -8%, var(--color-glow-1), transparent 70%),
+        radial-gradient(ellipse 48rem 34rem at -12% 28rem, var(--color-glow-2), transparent 70%);
+    background-repeat: no-repeat;
+}
+
+[id] {
+    scroll-margin-top: 1.5rem;
+}
+
+/* Typografie */
+
+h1,
+h2,
+h3 {
+    margin: 0 0 0.75em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-heading);
+    text-wrap: balance;
+    overflow-wrap: break-word;
+}
+
+h1 {
+    font-size: clamp(2rem, 1.45rem + 2.4vw, 3.1rem);
+    letter-spacing: -0.01em;
 }
 
 h2 {
-    color: var(--secondary-color);
-    font-size: 1.5em;
-    text-align: left;
-    margin-top: 20px;
-    font-weight: bold;
+    font-size: clamp(1.55rem, 1.3rem + 1.1vw, 2.15rem);
 }
 
 h3 {
-    font-size: 1.3em;
-    color: var(--primary-color);
-    font-weight: bold;
+    margin: 1.75em 0 0.6em;
+    font-size: clamp(1.2rem, 1.12rem + 0.4vw, 1.4rem);
 }
 
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+h3:first-child {
+    margin-top: 0;
 }
 
-header {
-    padding: 20px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: space-between;
-    background: none;
-    color: #fff;
+p,
+ul,
+ol {
+    margin: 0 0 1.1em;
 }
 
-.logo-container a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--primary-color);
+ul,
+ol {
+    padding-left: 1.35em;
 }
 
-header img {
-    width: 100px;
+li + li {
+    margin-top: 0.45em;
+}
+
+li::marker {
+    color: var(--color-accent);
+}
+
+strong {
+    font-weight: 700;
+}
+
+.highlight {
+    font-weight: 700;
+    color: var(--color-heading);
+}
+
+img {
+    max-width: 100%;
     height: auto;
 }
 
-.header-text {
-    text-align: left;
-    margin-left: 20px;
-}
-
-.header-text h1 {
+figure {
     margin: 0;
-    font-size: 2em;
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.header-text p {
-    margin: 5px 0 0;
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #000;
+a {
+    color: var(--color-primary);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.2em;
 }
 
-.nav-links {
+a:hover {
+    color: var(--color-primary-hover);
+    text-decoration-thickness: 0.14em;
+}
+
+:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 3px;
+}
+
+/* Hlavička a navigace */
+
+.skip-link {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    z-index: 10;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0 0 1rem 1rem;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 700;
+    transform: translateY(-120%);
+}
+
+.skip-link:focus {
+    color: var(--color-on-primary);
+    transform: none;
+}
+
+.site-header {
+    position: relative;
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+    width: min(100% - 2 * var(--gutter), var(--wide));
+    margin-inline: auto;
+    padding-block: 1rem 1.75rem;
 }
 
-.nav-links ul {
-    list-style: none;
+.site-header::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 12px;
+    background-color: var(--tulip-leaf);
+    opacity: 0.6;
+    -webkit-mask: var(--vine) left center / 120px 12px repeat-x;
+    mask: var(--vine) left center / 120px 12px repeat-x;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 44px;
+    border-radius: 1.25rem;
+    color: inherit;
+    text-decoration: none;
+}
+
+.brand:hover {
+    color: inherit;
+}
+
+.brand-logo {
+    flex: none;
+    width: clamp(3.9rem, 3.3rem + 2.5vw, 5rem);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+}
+
+.brand-slogan {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem);
+    font-style: italic;
+    color: var(--color-heading);
+}
+
+.brand-name {
+    margin-top: 0.2rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--color-muted);
+}
+
+.site-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.25rem;
+    margin: 0;
     padding: 0;
-    margin: 0;
-    display: flex;
-    gap: 15px;
+    list-style: none;
 }
 
-.nav-links a {
+.site-nav li + li {
+    margin-top: 0;
+}
+
+.site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.35rem clamp(0.6rem, 0.35rem + 1vw, 1rem);
+    border-radius: 999px;
+    color: var(--color-ink);
+    font-size: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.site-nav a:hover {
+    background: var(--color-surface-soft);
+    color: var(--color-ink);
+}
+
+.site-nav a[aria-current="page"] {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+}
+
+@media (min-width: 64rem) {
+    .site-header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+/* Obsah stránky */
+
+main {
+    flex: 1 0 auto;
+    width: min(100% - 2 * var(--gutter), var(--wide));
+    margin-inline: auto;
+    padding-block: clamp(2rem, 5vw, 3.5rem) var(--space-section);
+}
+
+main > * {
+    max-width: var(--measure);
+    margin-inline: auto;
+}
+
+main > .wide {
+    max-width: none;
+}
+
+main > * + * {
+    margin-top: var(--space-section);
+}
+
+main > .page-intro + * {
+    margin-top: 2.5rem;
+}
+
+.page-intro {
+    text-align: center;
+}
+
+.page-intro h1 {
+    margin-bottom: 0;
+}
+
+.eyebrow {
+    margin: 0 0 0.6rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+
+.lead {
+    font-size: clamp(1.12rem, 1.04rem + 0.35vw, 1.3rem);
+    line-height: 1.6;
+}
+
+/* Nadpisy sekcí s drobným tulipánem */
+
+main h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55em;
+}
+
+main h2::before {
+    content: "";
+    flex: none;
+    width: 0.62em;
+    height: 0.82em;
+    background-color: var(--color-accent);
+    -webkit-mask: var(--tulip-glyph) center / contain no-repeat;
+    mask: var(--tulip-glyph) center / contain no-repeat;
+}
+
+.section-intro {
+    max-width: var(--measure);
+    margin: 0 auto 2.5rem;
+}
+
+.section-intro > :last-child {
+    margin-bottom: 0;
+}
+
+.section-intro h2,
+.cta h2 {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4em;
+    text-align: center;
+}
+
+/* Citát */
+
+.quote {
+    max-width: 38rem;
+    text-align: center;
+}
+
+.quote::before {
+    content: "";
+    display: block;
+    width: 1.6rem;
+    height: 2.1rem;
+    margin: 0 auto 0.9rem;
+    background-color: var(--tulip-petal);
+    -webkit-mask: var(--tulip-glyph) center / contain no-repeat;
+    mask: var(--tulip-glyph) center / contain no-repeat;
+}
+
+.quote blockquote {
+    margin: 0;
+}
+
+.quote blockquote p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.1rem + 0.75vw, 1.6rem);
+    font-style: italic;
+    line-height: 1.5;
+    text-wrap: balance;
+}
+
+.quote figcaption {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+}
+
+/* Tlačítka */
+
+.button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 14px;
-    padding: 5px 10px;
-    border: 2px solid var(--primary-color);
-    border-radius: 5px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.nav-links a.active {
-    background-color: var(--primary-color);
-    color: #fff;
-}
-
-.nav-links a.active:hover,
-.nav-links a:hover {
-    background-color: var(--primary-color);
-    color: #fff;
-}
-
-.main-content {
-    padding: 20px;
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-}
-
-.main-text {
-    max-width: 600px;
-    text-align: left;
-}
-
-.text-center {
+    min-height: 3rem;
+    padding: 0.7rem 1.6rem;
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-leaf-small);
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    line-height: 1.25;
     text-align: center;
-}
-
-.quote {
-    font-style: italic;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.button {
-    display: inline-block;
-    padding: 5px 10px;
-    font-size: 14px;
-    font-weight: bold;
-    color: var(--secondary-color);
-    background-color: transparent;
-    border: 2px solid var(--secondary-color);
-    border-radius: 5px;
     text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    text-transform: uppercase;
+    transition: border-radius 350ms ease, background-color 200ms ease, border-color 200ms ease, color 200ms ease;
 }
 
 .button:hover {
-    background-color: var(--secondary-color);
-    color: white;
-    transform: scale(1.1);
+    border-color: var(--color-primary-hover);
+    border-radius: 0.45rem 1.5rem;
+    background: var(--color-primary-hover);
+    color: var(--color-on-primary);
 }
 
-.highlight-green {
-    font-weight: bold;
-    color: var(--primary-color);
+.button--quiet {
+    background: transparent;
+    color: var(--color-primary);
 }
 
-.image-container,
-.map-container {
-    text-align: center;
-    margin: 20px 0;
+.button--quiet:hover {
+    background: var(--color-surface-soft);
+    color: var(--color-primary-hover);
 }
 
-.image-container img {
-    max-width: 100%;
-    height: auto;
-    display: inline-block;
-}
-
-footer {
-    background-color: var(--header-bg-color);
-    text-align: center;
-    padding: 30px 0;
-    margin-top: 20px;
-}
-
-.contacts {
+.actions {
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-evenly;
-    align-items: center;
-    gap: 30px;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
+.text-center,
+.cta {
+    text-align: center;
+}
 
-/* mobiles */
+.text-center .actions,
+.cta .actions {
+    justify-content: center;
+}
 
-@media only screen and (max-width: 800px) {
-    header {
-        flex-direction: column;
-        align-items: center;
-    }
+/* Zvýrazněné bloky ve tvaru listu */
 
-    .logo-container {
-        margin-bottom: 10px;
-    }
+.panel,
+.cta {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: var(--radius-leaf);
+    background: var(--color-surface-soft);
+}
 
-    .nav-links ul {
-        max-width: 100%;
-        gap: 5px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
+.panel > :last-child,
+.cta > :last-child {
+    margin-bottom: 0;
+}
 
-    .main-content {
-        margin: 0;
-    }
+/* Fotografie */
 
-    .main-text {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 10px;
-    }
+.photo img {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius-leaf);
+    box-shadow: var(--shadow-soft);
+}
 
-    .quote {
-        margin-top: 0;
-    }
+.photo figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--color-muted);
+}
 
-    .contacts {
-        flex-direction: column;
-        align-items: center;
+/* Patička */
+
+.site-footer {
+    padding: clamp(3rem, 7vw, 4.5rem) var(--gutter) 1.5rem;
+    border-radius: 50% 50% 0 0 / clamp(1.25rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem) 0 0;
+    background: var(--color-footer);
+    color: var(--color-on-footer);
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 2rem 3rem;
+    max-width: 60rem;
+    margin-inline: auto;
+}
+
+.site-footer h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.2rem;
+    color: var(--color-on-footer);
+}
+
+.site-footer p,
+.site-footer address,
+.site-footer ul {
+    margin: 0 0 0.75rem;
+    font-size: 0.95rem;
+    font-style: normal;
+}
+
+.site-footer ul {
+    padding: 0;
+    list-style: none;
+}
+
+.site-footer li + li {
+    margin-top: 0.3rem;
+}
+
+.site-footer a {
+    color: var(--color-footer-link);
+}
+
+.site-footer a:hover {
+    color: var(--color-on-footer);
+}
+
+.site-footer :focus-visible {
+    outline-color: var(--color-footer-link);
+}
+
+.copyright {
+    max-width: 60rem;
+    margin: 2rem auto 0;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* Omezení pohybu – respektuje systémové nastavení „omezit animace“. */
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
     }
 }
 
-/* tablets and larger screens */
-
-@media only screen and (min-width: 800px) {
-    header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: var(--header-bg-color);
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-delay: 0s !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-delay: 0s !important;
+        transition-duration: 0.01ms !important;
     }
 }

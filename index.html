@@ -2,112 +2,227 @@
 <html lang="cs">
 
 <head>
-    <!-- title -->
-    <title>Dita Vávrová – psycholog, psychoterapie, kouč, mediace, hypnoterapie, úzkost, deprese, emoční přejídání, osobní rozvoj | Valašské Meziříčí online</title>
-    
-    <!-- favicon -->
-    <link rel="icon" type="image/png" href="favicon.png">
-
-    <!-- metatags -->
-    <meta charset="UTF-8">
-    <meta name="robots" content="index, follow">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Úvodní stránka s přehledem služeb psychologa, psychoterapeuta a kouče. Valašské Meziříčí i online.">
+    <title>Psycholog a psychoterapeut ve Valašském Meziříčí | Dita Vávrová</title>
+    <meta name="description" content="Psychologické poradenství, psychoterapie, koučování a další služby ve Valašském Meziříčí. Konzultace osobně, online i po telefonu s Ditou Vávrovou.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://divav.cz/">
 
-    <!-- CSS -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="cs_CZ">
+    <meta property="og:site_name" content="Dita Vávrová">
+    <meta property="og:title" content="Psycholog a psychoterapeut ve Valašském Meziříčí | Dita Vávrová">
+    <meta property="og:description" content="Psychologické poradenství, psychoterapie, koučování, hypnoterapie a mediace ve Valašském Meziříčí i online.">
+    <meta property="og:url" content="https://divav.cz/">
+    <meta property="og:image" content="https://divav.cz/images/og-terapeutovna.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Terapeutovna na ulici Nová ve Valašském Meziříčí">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <script src="js/design.js"></script>
+    <link rel="stylesheet" href="css/palettes.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/index.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://divav.cz/#website",
+                "url": "https://divav.cz/",
+                "name": "Dita Vávrová",
+                "alternateName": "DiVav",
+                "inLanguage": "cs",
+                "publisher": { "@id": "https://divav.cz/#praxe" }
+            },
+            {
+                "@type": "LocalBusiness",
+                "@id": "https://divav.cz/#praxe",
+                "name": "PhDr. Ing. Dita Vávrová, MBA",
+                "description": "Psychologické poradenství, psychoterapie, koučování, hypnoterapie a mediace ve Valašském Meziříčí i online.",
+                "url": "https://divav.cz/",
+                "image": "https://divav.cz/images/og-terapeutovna.jpg",
+                "logo": "https://divav.cz/images/divav_logo.png",
+                "telephone": "+420606096129",
+                "email": "psycholog.divav@gmail.com",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "Nová 707/1",
+                    "addressLocality": "Valašské Meziříčí",
+                    "addressCountry": "CZ"
+                },
+                "geo": {
+                    "@type": "GeoCoordinates",
+                    "latitude": 49.4707572,
+                    "longitude": 17.971014
+                },
+                "hasMap": "https://mapy.cz/s/dunapafebu",
+                "areaServed": { "@type": "City", "name": "Valašské Meziříčí" },
+                "founder": { "@id": "https://divav.cz/#dita-vavrova" }
+            },
+            {
+                "@type": "Person",
+                "@id": "https://divav.cz/#dita-vavrova",
+                "name": "Dita Vávrová",
+                "honorificPrefix": "PhDr. Ing.",
+                "honorificSuffix": "MBA",
+                "jobTitle": "psycholožka",
+                "url": "https://divav.cz/pages/omne.html",
+                "image": "https://divav.cz/images/foto_DV_oval.webp",
+                "worksFor": { "@id": "https://divav.cz/#praxe" }
+            }
+        ]
+    }
+    </script>
 </head>
 
 <body>
-    <header>
-        <!-- logo and title -->
-        <div class="logo-container">
-            <a href="#">
-                <img src="images/divav_logo.png" alt="Logo DIVAV">
-                <div class="header-text">
-                    <h1>Nechte svůj život rozkvést!</h1>
-                    <p>PhDr. Ing. Dita Vávrová, MBA</p>
-                </div>
-            </a>
-        </div>
+    <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
 
-        <!-- navigation -->
-        <nav class="nav-links" aria-label="Hlavní navigace">
+    <header class="site-header">
+        <a class="brand" href="./">
+            <img class="brand-logo" src="images/divav_logo.webp" alt="DiVav" width="240" height="208">
+            <span class="brand-text">
+                <span class="brand-slogan">Nechte svůj život rozkvést!</span>
+                <span class="brand-name">PhDr. Ing. Dita Vávrová, MBA</span>
+            </span>
+        </a>
+        <nav class="site-nav" aria-label="Hlavní navigace">
             <ul>
-                <li><a href="index.html" class="active">VÍTEJTE</a></li>
-                <li><a href="pages/omne.html">O&nbsp;MNĚ</a></li>
-                <li><a href="pages/sluzby.html">SLUŽBY</a></li>
-                <li><a href="pages/cenik.html">CENÍK</a></li>
-                <li><a href="pages/kontakt.html">KONTAKT</a></li>
+                <li><a href="./" aria-current="page">Vítejte</a></li>
+                <li><a href="pages/omne.html">O&nbsp;mně</a></li>
+                <li><a href="pages/sluzby.html">Služby</a></li>
+                <li><a href="pages/cenik.html">Ceník</a></li>
+                <li><a href="pages/kontakt.html">Kontakt</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="main-content">
-        <article class="main-text">
-            <!-- quote -->
-            <section class="intro-quote">
-                <blockquote class="quote">
-                    "Nejhlubší tajemství života spočívá v tom, že se všechny životní potíže mohou stát podnětem k růstu."
-                    <cite>- Erich S. Fromm</cite>
-                </blockquote>
-            </section>
+    <main id="obsah" tabindex="-1">
+        <section class="hero wide">
+            <div>
+                <p class="eyebrow">Psycholog · psychoterapeut · kouč</p>
+                <h1>Psychologické poradenství a psychoterapie ve Valašském Meziříčí</h1>
+                <p class="lead">Jmenuji se Dita Vávrová a nabízím psychologické poradenství, psychoterapii, koučování, hypnoterapii, mediaci a terapii pro děti a dospívající. Setkat se můžeme osobně v terapeutovně na ulici Nová 707/1 ve Valašském Meziříčí, online nebo po telefonu.</p>
+                <div class="actions">
+                    <a class="button" href="pages/kontakt.html#objednani">Chci se objednat</a>
+                    <a class="button button--quiet" href="pages/sluzby.html">Přehled služeb</a>
+                </div>
+            </div>
+            <div class="hero-art">
+                <img src="images/snezenky_circle.webp" alt="" width="426" height="426" fetchpriority="high">
+            </div>
+        </section>
 
-            <!-- intro -->
-            <section class="about-support">
-                <h2>Proměňte těžkosti v růst</h2>
-                <p>
-                    Každý z nás prochází v životě obdobím, kdy se zastaví a hledá cestu dál. Někdy jsou to otázky, jindy
-                    <strong>pochybnosti, obavy nebo touha po změně</strong>. Ráda bych Vás na této cestě podpořila a
-                    společně s Vámi objevila možnosti, jak nechat Váš život rozkvést.
-                </p>
-            </section>
+        <figure class="quote">
+            <blockquote>
+                <p>„Nejhlubší tajemství života spočívá v tom, že se všechny životní potíže mohou stát podnětem k růstu.“</p>
+            </blockquote>
+            <figcaption>Erich S. Fromm</figcaption>
+        </figure>
 
-            <!-- about me -->
-            <section class="about-me">
-                <p>
-                    Jsem <strong class="highlight-green">psycholog, psychoterapeut i kouč</strong> a nabízím bezpečný prostor, ve kterém můžete otevřeně hovořit o svých pocitech, myšlenkách a potřebách. Společně budeme pracovat na tom, abyste mohli
-                    <strong>objevit svůj potenciál, zvládnout těžkosti i výzvy a najít rovnováhu i smysl ve svém životě</strong>.
-                </p>
-            </section>
+        <section>
+            <h2>Proměňte těžkosti v růst</h2>
+            <p>Každý z nás prochází v životě obdobím, kdy se zastaví a hledá cestu dál. Někdy jsou to otázky, jindy <strong>pochybnosti, obavy nebo touha po změně</strong>. Ráda bych Vás na této cestě podpořila a společně s Vámi objevila možnosti, jak nechat Váš život rozkvést.</p>
+            <p>Jsem <strong class="highlight">psycholog, psychoterapeut i kouč</strong> a nabízím bezpečný prostor, ve kterém můžete otevřeně hovořit o svých pocitech, myšlenkách a potřebách. Společně budeme pracovat na tom, abyste mohli <strong>objevit svůj potenciál, zvládnout těžkosti i výzvy a najít rovnováhu i smysl ve svém životě</strong>.</p>
+        </section>
 
-            <!-- motivation -->
-            <section class="motivation text-center">
-                <h3>Změna je možná – a začít můžete právě teď.</h3>
-                <p>Ráda Vás na této cestě podpořím.</p>
-                <p>
-                    <a href="pages/kontakt.html" class="button">CHCI SE OBJEDNAT</a>
-                </p>
-            </section>
-        </article>
+        <section class="wide">
+            <div class="section-intro">
+                <h2>S čím Vám mohu pomoci</h2>
+            </div>
+            <ul class="service-list">
+                <li class="service-item">
+                    <h3><a href="pages/sluzby.html#psychologicke-poradenstvi">Psychologické poradenství</a></h3>
+                    <p>Podpora při rozhodování a řešení aktuálních problémů.</p>
+                </li>
+                <li class="service-item">
+                    <h3><a href="pages/sluzby.html#psychoterapie">Psychoterapie</a></h3>
+                    <p>Dlouhodobá pomoc při úzkostech, depresi, stresu a vztahových potížích.</p>
+                </li>
+                <li class="service-item">
+                    <h3><a href="pages/sluzby.html#koucovani">Koučování</a></h3>
+                    <p>Konkrétní cíle, kariérní růst a hledání motivace.</p>
+                </li>
+                <li class="service-item">
+                    <h3><a href="pages/sluzby.html#hypnoterapie">Hypnoterapie</a></h3>
+                    <p>Práce se změnou návyků, zvládáním stresu a osobním růstem.</p>
+                </li>
+                <li class="service-item">
+                    <h3><a href="pages/sluzby.html#mediace">Mediace</a></h3>
+                    <p>Řešení konfliktů v rodině, v práci i mezi sousedy.</p>
+                </li>
+                <li class="service-item">
+                    <h3><a href="pages/sluzby.html#terapie-s-detmi">Terapie s dětmi a dospívajícími</a></h3>
+                    <p>Hravá terapie, terapeutické pískoviště a metoda Kids’ Skills.</p>
+                </li>
+                <li class="service-item">
+                    <h3><a href="pages/sluzby.html#prednasky-a-seminare">Přednášky a semináře</a></h3>
+                    <p>Inspirace a praktické nástroje pro každodenní život.</p>
+                </li>
+            </ul>
+        </section>
 
-        <aside>
-            <img class="flower-image" src="images/snezenky_circle.png" alt="Květina">
-        </aside>
+        <section class="wide">
+            <div class="section-intro">
+                <h2>Jak se objednat</h2>
+            </div>
+            <ol class="steps">
+                <li>
+                    <h3>Ozvěte se</h3>
+                    <p>Termín si vyberte v <a href="pages/kontakt.html#objednani">rezervačním systému</a>, nebo napište e-mail či SMS/WhatsApp na číslo <a href="tel:+420606096129">606&nbsp;096&nbsp;129</a>. Pokud v systému nenajdete vhodný termín, napište mi – ozvu se Vám do 24 hodin.</p>
+                </li>
+                <li>
+                    <h3>Zvolte formu setkání</h3>
+                    <p>Osobně v terapeutovně na ulici Nová 707/1 ve Valašském Meziříčí, online (Google Meet, Zoom, WhatsApp) nebo po telefonu.</p>
+                </li>
+                <li>
+                    <h3>Přijďte na první setkání</h3>
+                    <p>Konzultace nabízím i odpoledne a o víkendu a není třeba doporučení lékaře. První setkání slouží také k tomu, abyste zjistili, zda Vám spolupráce vyhovuje. Ceny a podmínky najdete v <a href="pages/cenik.html">ceníku</a>.</p>
+                </li>
+            </ol>
+        </section>
+
+        <section class="cta">
+            <h2>Změna je možná – a začít můžete právě teď.</h2>
+            <p>Ráda Vás na této cestě podpořím.</p>
+            <div class="actions">
+                <a class="button" href="pages/kontakt.html#objednani">Chci se objednat</a>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <div class="contacts">
-            <div class="emergency">
-                <strong>Akutní ohrožení:</strong><br>
-                Linka první psychické pomoci (dospělí): 116 123<br>
-                Linka bezpečí (děti a mládež): 116 111<br>
-                Linka pro rodinu a školu: 116 000
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>
+                <h2>Akutní ohrožení</h2>
+                <ul>
+                    <li>Linka první psychické pomoci (dospělí): <a href="tel:116123">116&nbsp;123</a></li>
+                    <li>Linka bezpečí (děti a mládež): <a href="tel:116111">116&nbsp;111</a></li>
+                    <li>Linka pro rodinu a školu: <a href="tel:116000">116&nbsp;000</a></li>
+                </ul>
             </div>
-            <div class="contact-info">
-                <strong>Kontakt:</strong><br>
-                <strong>PhDr. Ing. Dita Vávrová, MBA</strong><br>
-                e-mail: <a href="mailto:psycholog.divav@gmail.com">psycholog.divav@gmail.com</a><br>
-                telefon: 606 096 129<br>
-                Valašské Meziříčí, Nová 707/1<br>
-                IČ: 18016570<br>
-                <a href="pages/kontakt.html">Více informací</a>
+            <div>
+                <h2>Kontakt</h2>
+                <address>
+                    <strong>PhDr. Ing. Dita Vávrová, MBA</strong><br>
+                    e-mail: <a href="mailto:psycholog.divav@gmail.com">psycholog.divav@gmail.com</a><br>
+                    telefon: <a href="tel:+420606096129">606&nbsp;096&nbsp;129</a><br>
+                    Valašské Meziříčí, Nová 707/1<br>
+                    IČ: 18016570
+                </address>
+                <p><a href="pages/kontakt.html">Více informací o objednání a cestě</a></p>
             </div>
         </div>
-        <div class="copyright">
-            <p>&copy; Dita Vávrová, 2025</p>
-        </div>
+        <p class="copyright">&copy; Dita Vávrová, 2026</p>
     </footer>
 </body>
-</html>
 
+</html>

@@ -1,0 +1,13 @@
+# GitHub Pages/Jekyll: keep development and maintenance files out of the public site.
+exclude:
+  - README.md
+  - privateNotOnGitHub
+  - package.json
+  - package-lock.json
+  - node_modules
+  - vendor
+  - tests
+  - tools
+  - playwright.config.mjs
+  - test-results
+  - playwright-report

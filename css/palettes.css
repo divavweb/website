@@ -1,0 +1,151 @@
+/*
+ * Barevné palety webu (sémantické barevné proměnné).
+ *
+ * Aktivní paleta se NEMĚNÍ zde, ale v souboru js/design.js (colorPalette).
+ * Každá paleta musí definovat všechny proměnné jako paleta 1 – automatické
+ * testy (npm test) kontrolují úplnost i kontrast textu.
+ *
+ * Nová paleta: zkopírujte celý blok poslední palety, změňte číslo
+ * v [data-palette="…"] a barvy, pak nastavte číslo v js/design.js.
+ */
+
+/* 1 – Warm Tulip: krémový podklad, meruňková záře, zelené listy, červené tulipány (výchozí) */
+:root,
+[data-palette="1"] {
+    color-scheme: light;
+    --color-page: #fff8f0;
+    --color-glow-1: #ffe3c8;
+    --color-glow-2: #ffdfe4;
+    --color-surface: #fffdf9;
+    --color-surface-soft: #fdebdc;
+    --color-ink: #3b2c27;
+    --color-muted: #6a554d;
+    --color-heading: #2f5a35;
+    --color-primary: #3a6b3f;
+    --color-primary-hover: #2c5532;
+    --color-on-primary: #ffffff;
+    --color-accent: #a8322b;
+    --color-border: #ecd5c3;
+    --color-focus: #1f5f8b;
+    --color-footer: #2f4a30;
+    --color-on-footer: #fbf3e8;
+    --color-footer-link: #ffd6b0;
+    --tulip-petal: #e2453c;
+    --tulip-petal-light: #f0705f;
+    --tulip-petal-deep: #a92a33;
+    --tulip-leaf: #6aa860;
+    --tulip-leaf-deep: #3f7a3f;
+    --tulip-pollen: #f2c14e;
+}
+
+/* 2 – Soft Sage: šalvějová zeleň a meruňkové tulipány */
+[data-palette="2"] {
+    color-scheme: light;
+    --color-page: #f3f6ef;
+    --color-glow-1: #e3eedc;
+    --color-glow-2: #f6e6d8;
+    --color-surface: #fbfcf8;
+    --color-surface-soft: #e2eadc;
+    --color-ink: #28332d;
+    --color-muted: #4f5d55;
+    --color-heading: #2c5444;
+    --color-primary: #336150;
+    --color-primary-hover: #264c3e;
+    --color-on-primary: #ffffff;
+    --color-accent: #8b4f33;
+    --color-border: #d3dfcc;
+    --color-focus: #1d4f7a;
+    --color-footer: #263f35;
+    --color-on-footer: #f2f6ee;
+    --color-footer-link: #f6d2b5;
+    --tulip-petal: #f2b48f;
+    --tulip-petal-light: #fbd2b6;
+    --tulip-petal-deep: #d4825d;
+    --tulip-leaf: #86ab8f;
+    --tulip-leaf-deep: #4f7a62;
+    --tulip-pollen: #e9b949;
+}
+
+/* 3 – Blush & Plum: pudrově růžová a švestková */
+[data-palette="3"] {
+    color-scheme: light;
+    --color-page: #fcf3f5;
+    --color-glow-1: #f9dfe7;
+    --color-glow-2: #efe0f0;
+    --color-surface: #fffafb;
+    --color-surface-soft: #f6e0e7;
+    --color-ink: #382631;
+    --color-muted: #65505c;
+    --color-heading: #5e2b52;
+    --color-primary: #743763;
+    --color-primary-hover: #5c2a4f;
+    --color-on-primary: #ffffff;
+    --color-accent: #a3305f;
+    --color-border: #ecd3dc;
+    --color-focus: #244b80;
+    --color-footer: #47233f;
+    --color-on-footer: #fdf0f4;
+    --color-footer-link: #ffc3d6;
+    --tulip-petal: #de6f99;
+    --tulip-petal-light: #f0a6c1;
+    --tulip-petal-deep: #a8406f;
+    --tulip-leaf: #7a9a66;
+    --tulip-leaf-deep: #4d6b42;
+    --tulip-pollen: #f2d16b;
+}
+
+/* 4 – Golden Calm: medová a zlatavá */
+[data-palette="4"] {
+    color-scheme: light;
+    --color-page: #fdf7e8;
+    --color-glow-1: #fbe7b5;
+    --color-glow-2: #f9e0c4;
+    --color-surface: #fffdf5;
+    --color-surface-soft: #f6e9c6;
+    --color-ink: #372f1f;
+    --color-muted: #62553c;
+    --color-heading: #5b4510;
+    --color-primary: #6a5114;
+    --color-primary-hover: #54400e;
+    --color-on-primary: #ffffff;
+    --color-accent: #8f4f10;
+    --color-border: #ead9ad;
+    --color-focus: #1d4f7a;
+    --color-footer: #3f3a1a;
+    --color-on-footer: #fdf6e3;
+    --color-footer-link: #f8d77c;
+    --tulip-petal: #f0bb3f;
+    --tulip-petal-light: #f8d775;
+    --tulip-petal-deep: #cf8a1c;
+    --tulip-leaf: #83a04f;
+    --tulip-leaf-deep: #56743a;
+    --tulip-pollen: #9a5b14;
+}
+
+/* 5 – Evening Warmth: tmavý večerní podklad, teplé korálové tulipány */
+[data-palette="5"] {
+    color-scheme: dark;
+    --color-page: #231c26;
+    --color-glow-1: #3a2630;
+    --color-glow-2: #2f2638;
+    --color-surface: #2d2431;
+    --color-surface-soft: #3a2e3e;
+    --color-ink: #f3e8de;
+    --color-muted: #cdbdb2;
+    --color-heading: #f7c99b;
+    --color-primary: #f2a86f;
+    --color-primary-hover: #f7bf8f;
+    --color-on-primary: #231c26;
+    --color-accent: #f4a3a0;
+    --color-border: #4a3b4e;
+    --color-focus: #9cd2ff;
+    --color-footer: #19131b;
+    --color-on-footer: #f3e8de;
+    --color-footer-link: #f7c99b;
+    --tulip-petal: #e8705a;
+    --tulip-petal-light: #f3a07f;
+    --tulip-petal-deep: #b04640;
+    --tulip-leaf: #7d9e7a;
+    --tulip-leaf-deep: #56785a;
+    --tulip-pollen: #ffd48a;
+}
