@@ -1,111 +1,93 @@
-# Dita Vávrová – Psycholog, Psychoterapie, Kouč, Mediace, Hypnoterapie
+# Web Dity Vávrové
 
-Vítejte v repozitáři webových stránek Mgr. Ing. Dity Vávrové, MBA – psycholožky, psychoterapeutky, koučky a mediátorky působící ve Valašském Meziříčí. Tento web nabízí informace o poskytovaných službách, cenách, vzdělání, etických zásadách a možnostech kontaktu.
+Statický český web psychologického poradenství a dalších služeb ve Valašském Meziříčí. Stránky jsou ručně udržované HTML, CSS a JavaScript bez frameworku a bez produkčního sestavení. Produkční doména je `https://divav.cz/`; veřejné adresy stránek zůstávají zachované.
 
----
+## Struktura
 
-## Struktura projektu
+- `index.html` – úvodní stránka, lokální strukturovaná data a hlavní interní odkazy.
+- `pages/omne.html`, `pages/sluzby.html`, `pages/cenik.html`, `pages/kontakt.html` – obsahové stránky.
+- `css/styles.css` – společné rozvržení, typografie, navigace, patička a ovládací prvky.
+- `css/palettes.css` – pět sad sémantických barevných proměnných.
+- `css/tulips.css` a `pages/sluzby.html` – vzhled a CSS animace tulipánového přehledu služeb.
+- `js/design.js` – jediná konfigurace aktivní palety, animace a vzhledu tulipánů.
+- `js/tulips.js` – otevření služby odkazované pomocí URL kotvy; obsah funguje i bez JavaScriptu.
+- `images/` – fotografie, logo, loga organizací a optimalizované varianty WebP.
+- `robots.txt`, `sitemap.xml`, `CNAME` a `_config.yml` – soubory pro crawl a GitHub Pages/Jekyll.
+- `tools/design-preview.mjs` – lokální náhled stránek a porovnání variant; není veřejnou stránkou.
+- `tests/` – rychlé statické testy a Playwright testy vykreslených stránek a interakcí.
 
-website/
-- css/
-    - cenik.css
-    - green_button.css
-    - index.css
-    - kontakt.css
-    - omne.css
-    - sluzby.css
-    - styles.css
-- images/
-    - CAP_logo.png
-    - CMPS_logo.png
-    - divav_logo.png
-    - foto_DV_oval.png
-    - foto_piskoviste.jpg
-    - foto_terapeutovna.jpg
-    - snezenky_circle.png
-- pages/
-    - cenik.html
-    - kontakt.html
-    - omne.html
-    - sluzby.html
-- CNAME
-- favicon.png
-- index.html
-- README.md
-- robots.txt
-- sitemap.xml
+## Spuštění a testy
 
----
+Web lze otevřít jako statické soubory, ale pro úplný místní náhled doporučujeme Node.js 20 nebo novější:
 
-## Popis webu
+```sh
+npm ci
+npm run preview
+```
 
-### Hlavní stránka (`index.html`)
-- Úvodní přehled služeb a motivační citát.
-- Stručné představení a pozvání ke kontaktu.
-- Navigace na další sekce webu.
+Otevřete `http://127.0.0.1:4173/__design-preview` pro výběr stránky a variant, `http://127.0.0.1:4173/__design-matrix` pro matici obsahových tulipánů nebo `http://127.0.0.1:4173/__theme-toggle-matrix` pro sedm vzhledů denního/nočního přepínače. Server poslouchá pouze na loopback rozhraní. Po dokončení jej zastavte pomocí `Ctrl+C`.
 
-### O mně (`pages/omne.html`)
-- Podrobné informace o vzdělání, přístupech, hodnotách a etických zásadách.
-- Fotografie, loga profesních asociací.
-- Informace o kontinuálním vzdělávání a zkušenostech.
+Playwright používá Chromium. Pokud jeho prohlížeč není nainstalovaný:
 
-### Služby (`pages/sluzby.html`)
-- Přehled poskytovaných služeb: psychologické poradenství, psychoterapie, koučování, hypnoterapie, mediace, přednášky a semináře.
-- Specifika práce s dětmi, dospívajícími a dospělými.
-- Rozdíly mezi jednotlivými službami.
-- Vysvětlení terapeutických metod a přístupů.
+```sh
+npx playwright install chromium
+```
 
-### Ceník (`pages/cenik.html`)
-- Přehled cen za jednotlivé služby.
-- Platební a storno podmínky.
-- Výhody placené terapie a další důležité informace.
+Spuštění kontrol:
 
-### Kontakt (`pages/kontakt.html`)
-- Možnosti objednání (online rezervační systém, e-mail, telefon).
-- Adresa terapeutovny, informace o parkování a dopravě.
-- Nouzové kontakty (linky pomoci).
-- Možnost online nebo telefonických konzultací.
+```sh
+npm test
+npm run test:browser
+npm run test:all
+```
 
----
+V omezených macOS/sandbox prostředích může být nutné spustit Chromium v režimu jednoho procesu a nastavit cestu k již nainstalovanému prohlížeči:
 
-## Další soubory
+```sh
+PW_SINGLE_PROCESS=1 PLAYWRIGHT_BROWSERS_PATH="$TMPDIR/ms-playwright" npm run test:browser
+```
 
-- **CSS**: Každá stránka má vlastní stylopis pro lepší přehlednost a údržbu.
-- **Obrázky**: Loga, fotografie pracovního prostoru, profilová fotografie, tematické ilustrace.
-- **robots.txt, sitemap.xml**: Pro SEO a správné indexování vyhledávači.
-- **CNAME**: Pro vlastní doménu při nasazení na GitHub Pages nebo jiném hostingu.
+Prohlížečové testy obsluhují lokální soubory přes Playwright routing, takže nepotřebují otevřený síťový port. Externí Calendly a Mapy.cz se při nich nahrazují testovací odpovědí; jejich skutečnou dostupnost je nutné ověřit ručně.
 
----
+## Úprava textů, obrázků a služeb
 
-## Nasazení
+- Texty měňte přímo v odpovídajícím HTML. Zachovejte českou diakritiku, přístupnou hierarchii nadpisů a ověřené znění profesních informací.
+- Při úpravě stránky aktualizujte její jedinečný `<title>`, popis `meta[name="description"]`, canonical a sociální metadata. Canonical, `og:url` a záznam v `sitemap.xml` musí ukazovat na tutéž veřejnou adresu.
+- Kontaktní údaje jsou opakovány na stránkách a v JSON-LD na homepage; měňte je společně. Do strukturovaných dat nepřidávejte neověřené ceny, hodnocení, otevírací dobu, členství ani kvalifikace.
+- Při výměně fotografie aktualizujte `src`, případné `srcset`, rozměry `width`/`height` a věcný text `alt`. Dekorativní obrázek má `alt=""`. Obrázky před nahráním přiměřeně zmenšete a zkontrolujte, že neobsahují soukromá metadata, například GPS polohu.
+- Služby jsou na stránce `pages/sluzby.html` jako nativní prvky `<details class="tulip">`. Upravte název v `<summary>` a obsah v `.tulip-content`. Při přidání služby jí dejte jedinečné stabilní `id` a podle potřeby přidejte odkaz z homepage. Nepřidávejte tvrzení o léčebném výsledku ani jiné neověřené informace.
 
-Web je statický a lze jej jednoduše nasadit na jakýkoliv hosting (např. GitHub Pages, Netlify, Vercel). Stačí nahrát celý obsah složky `website/` na server.
+## Změna vzhledu
 
----
+Trvalá konfigurace designu je v `js/design.js`. Hlavička nabízí návštěvníkům pouze přepínač dne/noci, nikoli veřejný výběr všech pěti palet. Podrobné pokyny pro vlastníka jsou v lokálních manuálech `privateNotOnGitHub/`, které se nepublikují ani nesledují v Gitu.
 
-## Kontakt
+**Palety:** 1 Warm Tulip, 2 Soft Sage, 3 Blush & Plum, 4 Golden Calm, 5 Evening Warmth. Celé sady proměnných jsou v `css/palettes.css`. Nová paleta musí definovat všechny existující barevné tokeny, splnit kontrastní požadavky a být doplněna do komentáře konfigurace a testů.
 
-**Mgr. Ing. Dita Vávrová, MBA**  
-e-mail: psycholog.divav@gmail.com  
-telefon: 606 096 129  
-Valašské Meziříčí, Nová 707/1  
-IČ: 18016570
+**Animace:** 1 rozkvétá, 2 rozestupuje plátky, 3 nechává plátky jemně opadat, 4 mírně otevírá květ a rozbaluje obsah. **Vzhledy:** 1 měkká ilustrace, 2 detailnější botanicky laděný vektor. Animace a vzhledy používají stejné HTML i obsah; jejich CSS je v `css/tulips.css`, SVG kresba v `pages/sluzby.html`. Text zůstává přímo v HTML. Pro nové varianty rozšiřte příslušné selektory `[data-animation="N"]` či `[data-appearance="N"]`, aktualizujte výběr variant v náhledu a přidejte test.
 
----
+Animované obrázky jsou udržovatelné vektorové ilustrace, nikoli fotorealistická botanická grafika. Přesné zobrazení se může mezi prohlížeči lišit; varianta s rozbalováním výšky závisí na podpoře CSS `::details-content` a `interpolate-size`. Při `prefers-reduced-motion` jsou pohybové efekty zkráceny na zanedbatelnou dobu.
 
-## Licence
+## Bezpečná údržba a publikování
 
-Webové stránky jsou určeny pro osobní prezentaci a informování klientů. Obsah je chráněn autorským právem.
+Projekt se publikuje jako statický web přes GitHub Pages/Jekyll z kořene repozitáře. `_config.yml` vylučuje README, dokumentaci, testy, nástroje a vývojové závislosti z veřejného výstupu. Produkční web nemá build ani runtime závislost; Playwright je pouze vývojová závislost.
 
----
+Před odevzdáním změn:
 
-## Poznámky pro správce
+1. Spusťte `npm ci` a `npm run test:all`.
+2. Projděte `git diff` a ověřte změněný text, kontakty, ceny, SEO metadata a lokální obrázky.
+3. Změny publikujte pouze standardním schváleným postupem repozitáře. Tento projektový návod nespouští ani neprovádí nasazení.
+4. Po publikaci ověřte hlavní stránky, rezervaci a mapu. Interní vývojové dokumenty jsou lokální, Git-ignored a vyloučené z Jekyll publikace.
 
-- Pro úpravy obsahu editujte příslušné HTML soubory ve složce `pages/` nebo `index.html`.
-- Pro změnu stylu upravujte soubory ve složce `css/`.
-- Nové obrázky vkládejte do složky `images/` a používejte relativní cesty.
-- Při rozšiřování webu dodržujte současnou strukturu pro snadnou orientaci a údržbu.
+Nepřidávejte přihlašovací údaje, neveřejné informace o klientech ani produkční tajné údaje do repozitáře. Web sám nenačítá analytiku ani vzdálené skripty. Kalendář Calendly a mapa jsou obsah třetích stran vložený přes iframe; mohou uplatnit vlastní zásady soukromí. GitHub Pages nemusí umožnit vlastní HTTP bezpečnostní hlavičky. CSP je ověřována lokálním náhledovým serverem; případné produkční hlavičky vyžadují podporu hostingu nebo proxy a musí být ověřeny po nasazení.
 
----
+## SEO úkoly vyžadující majitelku webu
 
-*V případě dotazů či návrhů na vylepšení pište na výše uvedený e-mail.*
+Repozitář nemá přístup k externím účtům a nepoužívá produkční přihlašovací údaje. Majitelka musí mimo repozitář:
+
+- ověřit aktuální profesní status, tituly, výcvik, členství, ceny, kontakty a přesné znění zdravotních či právních tvrzení;
+- ověřit Google Business Profile, jeho kategorii a shodu jména, adresy, telefonu, webu a objednávacího odkazu s realitou;
+- ověřit záznamy v Google Search Console a Seznam Webmaster, odeslat `https://divav.cz/sitemap.xml` a po publikaci sledovat indexaci;
+- udržovat konzistentní a pravdivé údaje v relevantních místních a profesních adresářích;
+- po nasazení ručně zkontrolovat HTTPS, přesměrování doménové varianty, skutečný rezervační kalendář a mapu na mobilu.
+
+Ověření domény v Search Console, změny DNS/hostingu, aktualizace externích profilů a publikování jsou ruční úkony majitelky. SEO úpravy nezaručují konkrétní pozici ve vyhledávání.

@@ -1,2 +1,53 @@
-@import "styles.css";
-@import "green_button.css";
+/* Stránka Ceník (pages/cenik.html) */
+
+.price-panel {
+    display: grid;
+    gap: 2rem;
+}
+
+.price-group h2 {
+    margin-bottom: 0.5rem;
+    font-size: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
+}
+
+.price-rows {
+    margin: 0 0 0.75rem;
+}
+
+.price-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px dashed var(--color-border);
+}
+
+.price-row dt {
+    flex: 1 1 14rem;
+    font-weight: 600;
+}
+
+.price-detail {
+    font-weight: 400;
+}
+
+.price-row dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    white-space: nowrap;
+    color: var(--color-heading);
+}
+
+.price-note {
+    margin: 0.5rem 0 0;
+    font-size: 0.95rem;
+    color: var(--color-muted);
+}
+
+.price-note + .price-rows {
+    margin-top: 0.75rem;
+}

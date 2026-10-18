@@ -1,8 +1,29 @@
-@import "styles.css";
+/* Stránka Objednání a kontakt (pages/kontakt.html) */
 
-@media only screen and (max-width: 800px) {
-    .map-container iframe {
-        width: 100%;
-        height: 500px;
-    }
+.embed {
+    margin: 1.5rem 0 2rem;
+}
+
+.booking-frame,
+.map-frame {
+    display: block;
+    width: 100%;
+    border: 0;
+    border-radius: var(--radius-leaf);
+    background: var(--color-surface);
+}
+
+.booking-frame {
+    height: 44rem;
+}
+
+.map-frame {
+    height: auto;
+    aspect-ratio: 10 / 7;
+}
+
+.embed-fallback {
+    margin: 0.75rem 0 0;
+    font-size: 0.95rem;
+    color: var(--color-muted);
 }

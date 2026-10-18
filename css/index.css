@@ -1,9 +1,216 @@
-@import "styles.css";
+/* Úvodní stránka (index.html) */
 
-.flower-image {
-    margin-top: 20px;
-    max-width: 300px;
+.hero {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+    align-items: center;
+}
+
+.hero h1 {
+    margin-bottom: 0.6em;
+}
+
+.hero .actions {
+    margin-top: 1.75rem;
+}
+
+.hero-art {
+    position: relative;
+    isolation: isolate;
+    justify-self: center;
+    width: min(100%, 15rem);
+    padding: clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.hero-art::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 58% 42% 55% 45% / 46% 54% 46% 54%;
+    background: var(--color-surface-soft);
+    transform: rotate(-8deg);
+}
+
+.hero-art img {
+    display: block;
+    width: 100%;
     border-radius: 50%;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 52rem) {
+    .hero {
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
+    }
+
+    .hero-art {
+        width: min(100%, 22rem);
+    }
+}
+
+/* Seznam služeb – každá služba vyrůstá z drobného tulipánu */
+
+.service-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.service-list li + li {
+    margin-top: 0;
+}
+
+.service-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.6rem minmax(0, 1fr);
+    column-gap: 1rem;
+    padding: 1rem 1.25rem 1rem 1rem;
+    border-radius: var(--radius-leaf);
+    transition: background-color 250ms ease;
+}
+
+.service-item::before {
+    content: "";
+    grid-row: 1 / span 2;
+    width: 1.6rem;
+    height: 2.1rem;
+    margin-top: 0.1rem;
+    background-color: var(--tulip-petal);
+    -webkit-mask: var(--tulip-glyph) center / contain no-repeat;
+    mask: var(--tulip-glyph) center / contain no-repeat;
+    transform-origin: 50% 100%;
+    transition: transform 400ms ease;
+}
+
+.service-item:nth-child(3n + 2)::before {
+    background-color: var(--tulip-petal-deep);
+}
+
+.service-item:nth-child(3n)::before {
+    background-color: var(--tulip-leaf);
+}
+
+.service-item h3 {
+    margin: 0 0 0.3rem;
+    font-size: clamp(1.15rem, 1.1rem + 0.3vw, 1.3rem);
+}
+
+.service-item h3 a {
+    color: var(--color-heading);
+    text-decoration-thickness: 0.06em;
+}
+
+.service-item h3 a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-leaf);
+}
+
+.service-item h3 a:focus-visible {
+    outline: none;
+}
+
+.service-item h3 a:focus-visible::after {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+.service-item p {
+    grid-column: 2;
+    margin: 0;
+    color: var(--color-muted);
+}
+
+.service-item:hover,
+.service-item:focus-within {
+    background: var(--color-surface-soft);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .service-item:hover::before {
+        transform: rotate(-10deg);
+    }
+}
+
+/* Jak se objednat – tři poupata na jednom stonku */
+
+.steps {
+    display: grid;
+    gap: 1.75rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+}
+
+.steps > li {
+    position: relative;
+    margin: 0;
+    padding-left: 4rem;
+    counter-increment: step;
+}
+
+.steps > li::before {
+    content: counter(step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 3.1rem;
+    border-radius: 50% 50% 45% 45% / 62% 62% 38% 38%;
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.steps > li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 3.5rem;
+    bottom: -1.5rem;
+    left: 1.3rem;
+    width: 2px;
+    border-radius: 1px;
+    background: var(--tulip-leaf);
+}
+
+.steps h3 {
+    margin: 0.55rem 0 0.4rem;
+}
+
+.steps p {
+    margin: 0;
+}
+
+@media (min-width: 52rem) {
+    .steps {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 2.5rem;
+    }
+
+    .steps > li {
+        padding: 4.25rem 0 0;
+    }
+
+    .steps > li:not(:last-child)::after {
+        top: 1.5rem;
+        right: -2rem;
+        bottom: auto;
+        left: 3.5rem;
+        width: auto;
+        height: 2px;
+    }
+
+    .steps h3 {
+        margin-top: 0;
+    }
 }

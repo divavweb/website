@@ -1,46 +1,47 @@
-@import "styles.css";
-@import "green_button.css";
+/* Stránka O mně (pages/omne.html) */
 
-.profile-image-container {
-    display: flex; 
+.about-intro {
+    display: flow-root;
+}
+
+.portrait {
+    float: right;
+    width: clamp(9rem, 28vw, 14rem);
+    margin: 0.25rem 0 1rem 1.5rem;
+    shape-outside: ellipse(50% 50%) border-box;
+    shape-margin: 0.9rem;
+}
+
+@media (max-width: 34rem) {
+    .portrait {
+        float: none;
+        display: block;
+        width: min(11rem, 60%);
+        margin: 0 auto 1.5rem;
+    }
+}
+
+.memberships {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 1rem 1.5rem;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    list-style: none;
 }
 
-.profile-image {
-    margin: 0 0 20px 20px; 
-    width: 200px;
-    height: 300px;
+.memberships li + li {
+    margin-top: 0;
 }
 
-.logos-container {
-    display: flex; 
-    justify-content: center; 
-    gap: 20px; 
-    margin-top: 20px;
-}
-
-.logos-container img {
-    max-width: 150px;
-}
-
-@media only screen and (max-width: 600px) {
-    .profile-image-container {
-        flex-direction: column; 
-        align-items: center;
-    }
-
-    .profile-image {
-        margin: 0 0 20px 0; 
-        max-width: 100%;
-    }
-
-    .logos-container {
-        flex-direction: column; 
-        align-items: center; 
-        gap: 10px;
-    }
-
-    .logos-container img {
-        max-width: 100%;
-    }
+/* Loga profesních společností jsou navržena pro bílé pozadí, proto zůstává bílé i v tmavé paletě. */
+.memberships img {
+    display: block;
+    width: 7.5rem;
+    height: 7.5rem;
+    padding: 0.5rem;
+    border-radius: var(--radius-leaf-small);
+    background: #fff;
+    box-shadow: var(--shadow-soft);
 }
