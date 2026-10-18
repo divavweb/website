@@ -298,6 +298,9 @@ test("day/night configuration maps to palettes 4 and 5 and all pages include an 
 test("service disclosure content is native, complete and linked from the homepage", async () => {
     const services = await read("pages/sluzby.html");
     const home = await read("index.html");
+    assert.match(home, /<p class="hero-audience">Pro děti, dospívající i dospělé<\/p>/);
+    assert.match(services, /<nav class="audience-links"[^>]*>[\s\S]*?<a href="#pro-dospele">Pro dospělé<\/a>[\s\S]*?<a href="#terapie-s-detmi">Pro děti a dospívající<\/a>/);
+    assert.match(services, /<section class="wide" id="pro-dospele">/);
     const ids = [...services.matchAll(/<details class="tulip" id="([^"]+)"/g)].map((match) => match[1]);
     assert.equal(ids.length, 6);
     assert.equal(new Set(ids).size, ids.length);

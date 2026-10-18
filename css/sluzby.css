@@ -1,5 +1,30 @@
 /* Stránka Služby (pages/sluzby.html) – samotné tulipány jsou v css/tulips.css */
 
+.audience-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 2rem;
+}
+
+.audience-links a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-leaf-small);
+    background: var(--color-surface);
+    color: var(--color-heading);
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.audience-links a:hover {
+    background: var(--color-surface-soft);
+    text-decoration: underline;
+}
+
 .topics {
     display: grid;
     gap: 1.5rem clamp(1.5rem, 4vw, 3rem);

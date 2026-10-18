@@ -10,6 +10,14 @@
     margin-bottom: 0.6em;
 }
 
+.hero-audience {
+    margin: 0 0 0.75em;
+    color: var(--color-heading);
+    font-size: clamp(1.2rem, 1.05rem + 0.55vw, 1.5rem);
+    font-weight: 650;
+    line-height: 1.35;
+}
+
 .hero .actions {
     margin-top: 1.75rem;
 }
