@@ -18,9 +18,17 @@ export function withDesignConfig(source, config) {
     let result = source;
     for (const key of designKeys) {
         if (config[key] === undefined) continue;
-        const pattern = new RegExp(`(${key}:\\s*)\\d+`);
+        const pattern = new RegExp(`(^\\s*${key}:\\s*)\\d+`, "m");
         if (!pattern.test(result)) throw new Error(`js/design.js does not define ${key}`);
         result = result.replace(pattern, `$1${config[key]}`);
+    }
+    if (config.themeToggleAppearance !== undefined) {
+        if (config.themeToggleAppearance !== "illustrated" && config.themeToggleAppearance !== "botanical") {
+            throw new Error(`Invalid themeToggleAppearance: ${config.themeToggleAppearance}`);
+        }
+        const pattern = /^(\s*themeToggleAppearance:\s*)"[^"]+"/m;
+        if (!pattern.test(result)) throw new Error("js/design.js does not define themeToggleAppearance");
+        result = result.replace(pattern, `$1"${config.themeToggleAppearance}"`);
     }
     return result;
 }

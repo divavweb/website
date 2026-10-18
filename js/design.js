@@ -2,7 +2,7 @@
  * Nastavení vzhledu webu divav.cz. Změny zde platí pro všechny stránky.
  * defaultTheme: "day" nebo "night"; dayPalette/nightPalette: čísla palet 1–5.
  * tulipAnimation: 1–4; tulipAppearance: 1–2; themeToggleVariant: 1–7.
- * themeToggleHillVariant: 1–3; themeToggleAppearance: "illustrated".
+ * themeToggleHillVariant: 1–3; themeToggleAppearance: "illustrated" nebo "botanical".
  */
 (function () {
     "use strict";
@@ -28,6 +28,10 @@
 
     function validTheme(value) {
         return value === "day" || value === "night";
+    }
+
+    function validToggleAppearance(value) {
+        return value === "illustrated" || value === "botanical";
     }
 
     function readStoredTheme() {
@@ -58,7 +62,10 @@
     root.setAttribute("data-appearance", String(siteDesign.tulipAppearance));
     root.setAttribute("data-toggle-variant", String(siteDesign.themeToggleVariant));
     root.setAttribute("data-hill-variant", String(siteDesign.themeToggleHillVariant));
-    root.setAttribute("data-toggle-appearance", siteDesign.themeToggleAppearance);
+    root.setAttribute(
+        "data-toggle-appearance",
+        validToggleAppearance(siteDesign.themeToggleAppearance) ? siteDesign.themeToggleAppearance : "illustrated"
+    );
 
     const previewSettings = [
         ["palette", "data-palette"],
@@ -72,6 +79,10 @@
             const value = params.get(parameter);
             if (value && validNumber.test(value)) root.setAttribute(attribute, value);
         });
+        const toggleAppearance = params.get("toggleAppearance");
+        if (toggleAppearance === "illustrated" || toggleAppearance === "botanical") {
+            root.setAttribute("data-toggle-appearance", toggleAppearance);
+        }
         if (params.get("reducedMotion") === "1") {
             root.setAttribute("data-preview-reduced-motion", "true");
         }

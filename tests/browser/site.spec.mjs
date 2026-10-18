@@ -6,8 +6,8 @@ const widths = [320, 375, 430, 768, 1024, 1440];
 const servicePage = `${siteOrigin}/pages/sluzby.html`;
 const localServicePage = `${localPreviewOrigin}/pages/sluzby.html`;
 
-async function routeSite(context, origins = [siteOrigin]) {
-    return serveStaticSite(context, { origins });
+async function routeSite(context, origins = [siteOrigin], design) {
+    return serveStaticSite(context, { origins, design });
 }
 
 test("all public pages render without local asset failures or browser errors", async ({ page }) => {
@@ -190,6 +190,79 @@ test("theme scene is a comfortable touch target on mobile", async ({ testBrowser
     }
 });
 
+test("service and header tulip appearances visibly switch independently in the local preview", async ({ page }) => {
+    await routeSite(page.context(), [localPreviewOrigin, siteOrigin]);
+    await page.setViewportSize({ width: 960, height: 900 });
+    await page.goto(`${localPreviewOrigin}/__design-preview`);
+    await page.locator("#page").selectOption("/pages/sluzby.html");
+    const frame = page.frameLocator("#showcase");
+    await expect(frame.locator("html")).toHaveAttribute("data-appearance", "1");
+    await expect(frame.locator("html")).toHaveAttribute("data-toggle-appearance", "illustrated");
+    await expect(frame.locator(".theme-toggle .toggle-botanical-art")).toHaveCSS("display", "none");
+
+    const serviceIllustrated = await frame.locator(".tulip-art").first().screenshot({ animations: "disabled" });
+    const headerIllustrated = await frame.locator(".theme-toggle-scene").screenshot({ animations: "disabled" });
+
+    await page.locator("#appearance").selectOption("2");
+    await expect(frame.locator("html")).toHaveAttribute("data-appearance", "2");
+    const serviceBotanical = await frame.locator(".tulip-art").first().screenshot({ animations: "disabled" });
+    expect(serviceBotanical.equals(serviceIllustrated)).toBe(false);
+    await expect(frame.locator(".theme-toggle")).toHaveAttribute("data-toggle-appearance", "illustrated");
+    expect((await frame.locator(".theme-toggle-scene").screenshot({ animations: "disabled" })).equals(headerIllustrated)).toBe(true);
+
+    await page.locator("#appearance").selectOption("1");
+    const serviceRestored = await frame.locator(".tulip-art").first().screenshot({ animations: "disabled" });
+    expect(serviceRestored.equals(serviceIllustrated)).toBe(true);
+
+    await page.locator("#toggleAppearance").selectOption("botanical");
+    await expect(frame.locator("html")).toHaveAttribute("data-toggle-appearance", "botanical");
+    await expect(frame.locator(".theme-toggle .toggle-flower > :not(.toggle-botanical-art)").first()).toHaveCSS("display", "none");
+    const headerBotanical = await frame.locator(".theme-toggle-scene").screenshot({ animations: "disabled" });
+    expect(headerBotanical.equals(headerIllustrated)).toBe(false);
+    expect((await frame.locator(".tulip-art").first().screenshot({ animations: "disabled" })).equals(serviceIllustrated)).toBe(true);
+
+    await page.locator("#toggleAppearance").selectOption("illustrated");
+    const headerRestored = await frame.locator(".theme-toggle-scene").screenshot({ animations: "disabled" });
+    expect(headerRestored.equals(headerIllustrated)).toBe(true);
+
+    for (let variant = 1; variant <= 7; variant += 1) {
+        await page.locator("#toggleVariant").selectOption(String(variant));
+        await expect(frame.locator(".theme-toggle")).toHaveAttribute("data-toggle-variant", String(variant));
+        await page.locator("#toggleAppearance").selectOption("illustrated");
+        await expect(frame.locator(".theme-toggle")).toHaveAttribute("data-toggle-appearance", "illustrated");
+        const illustrated = await frame.locator(".theme-toggle-scene").screenshot({ animations: "disabled" });
+        await page.locator("#toggleAppearance").selectOption("botanical");
+        await expect(frame.locator(".theme-toggle")).toHaveAttribute("data-toggle-appearance", "botanical");
+        const botanical = await frame.locator(".theme-toggle-scene").screenshot({ animations: "disabled" });
+        expect(botanical.equals(illustrated), `toggle variant ${variant} must visibly distinguish appearances`).toBe(false);
+    }
+
+    await page.locator("#theme").selectOption("night");
+    await expect(frame.locator("html")).toHaveAttribute("data-theme", "night");
+    await page.locator("#reducedMotion").check();
+    await expect(frame.locator("html")).toHaveAttribute("data-preview-reduced-motion", "true");
+    for (let variant = 1; variant <= 7; variant += 1) {
+        await page.locator("#toggleVariant").selectOption(String(variant));
+        await expect(frame.locator(".theme-toggle")).toHaveAttribute("data-toggle-variant", String(variant));
+        await page.locator("#toggleAppearance").selectOption("illustrated");
+        await expect(frame.locator(".theme-toggle")).toHaveAttribute("data-toggle-appearance", "illustrated");
+        const illustrated = await frame.locator(".theme-toggle-scene").screenshot({ animations: "disabled" });
+        await page.locator("#toggleAppearance").selectOption("botanical");
+        await expect(frame.locator(".theme-toggle")).toHaveAttribute("data-toggle-appearance", "botanical");
+        const botanical = await frame.locator(".theme-toggle-scene").screenshot({ animations: "disabled" });
+        expect(botanical.equals(illustrated), `night toggle variant ${variant} must visibly distinguish appearances`).toBe(false);
+    }
+});
+
+test("the owner can select the botanical header drawing in the shared design configuration", async ({ page }) => {
+    await routeSite(page.context(), [siteOrigin], { themeToggleAppearance: "botanical" });
+    await page.goto(`${siteOrigin}/pages/sluzby.html`);
+    await expect(page.locator("html")).toHaveAttribute("data-toggle-appearance", "botanical");
+    await expect(page.locator(".theme-toggle")).toHaveAttribute("data-toggle-appearance", "botanical");
+    await expect(page.locator("html")).toHaveAttribute("data-appearance", "1");
+    await expect(page.locator(".theme-toggle .toggle-flower > :not(.toggle-botanical-art)").first()).toHaveCSS("display", "none");
+});
+
 test("theme selection safely falls back when localStorage is blocked or contains an invalid value", async ({ testBrowser }) => {
     const context = await testBrowser.newContext();
     try {
@@ -228,13 +301,13 @@ test("all seven theme toggle variants render in both states and keep reduced-mot
         await expect(toggle).toHaveAttribute("data-toggle-variant", String(variant));
         await expect(toggle).toHaveAttribute("data-theme", "day");
         await expect(toggle.locator(".toggle-hill")).toBeVisible();
-        await expect(toggle.locator(".toggle-open-flower")).toBeVisible();
+        await expect(toggle.locator(".toggle-illustrated-art .toggle-open-flower")).toBeVisible();
 
         await toggle.click();
         await expect(toggle).toHaveAttribute("data-theme", "night");
         if (variant === 1) {
-            await expect(toggle.locator(".toggle-closed-flower")).toHaveCSS("opacity", "1");
-            await expect(toggle.locator(".toggle-open-flower")).toHaveCSS("opacity", "0");
+            await expect(toggle.locator(".toggle-illustrated-art .toggle-closed-flower")).toHaveCSS("opacity", "1");
+            await expect(toggle.locator(".toggle-illustrated-art .toggle-open-flower")).toHaveCSS("opacity", "0");
         } else if (variant === 2 || variant === 3) {
             await expect(toggle.locator(".toggle-fireflies")).toHaveCSS("opacity", "1");
             const animationName = await toggle.locator(".toggle-fireflies circle").first().evaluate((el) => getComputedStyle(el).animationName);
@@ -522,7 +595,7 @@ test("local preview pages send strict CSP without browser violations", async ({ 
     expect(missing).toEqual([]);
 });
 
-test("design preview and 40-cell matrix controls work", async ({ page }) => {
+test("design preview and 42-cell matrix controls work", async ({ page }) => {
     await routeSite(page.context(), [localPreviewOrigin, siteOrigin]);
     await page.goto(`${localPreviewOrigin}/__design-matrix`);
     await expect(page.locator(".matrix-cell")).toHaveCount(40);
@@ -542,6 +615,10 @@ test("design preview and 40-cell matrix controls work", async ({ page }) => {
     await expect(frame.locator("html")).toHaveAttribute("data-animation", "4");
     await page.locator("#appearance").selectOption("2");
     await expect(frame.locator("html")).toHaveAttribute("data-appearance", "2");
+    await page.locator("#toggleAppearance").selectOption("botanical");
+    await expect(frame.locator("html")).toHaveAttribute("data-toggle-appearance", "botanical");
+    await page.locator("#toggleAppearance").selectOption("illustrated");
+    await expect(frame.locator("html")).toHaveAttribute("data-toggle-appearance", "illustrated");
     await page.locator("#toggleVariant").selectOption("7");
     await expect(frame.locator("html")).toHaveAttribute("data-toggle-variant", "7");
     await page.locator("#hillVariant").selectOption("3");
@@ -557,14 +634,15 @@ test("design preview and 40-cell matrix controls work", async ({ page }) => {
     await expect(frame.locator("html")).not.toHaveAttribute("data-theme-transition");
 
     await page.goto(`${localPreviewOrigin}/__theme-toggle-matrix`);
-    await expect(page.locator(".toggle-preview-card")).toHaveCount(21);
+    await expect(page.locator(".toggle-preview-card")).toHaveCount(42);
+    await expect(page.locator(".toggle-preview-group")).toHaveCount(6);
     const matrixToggle = page.locator(".toggle-preview-card .theme-toggle").nth(2);
     await matrixToggle.click();
     await expect(matrixToggle).toHaveAttribute("data-theme", "night");
     await page.getByRole("button", { name: "Nastavit všechny na den" }).click();
-    await expect(page.locator(".toggle-preview-card .theme-toggle[data-theme='day']")).toHaveCount(21);
+    await expect(page.locator(".toggle-preview-card .theme-toggle[data-theme='day']")).toHaveCount(42);
     await page.getByRole("button", { name: "Nastavit všechny na noc" }).click();
-    await expect(page.locator(".toggle-preview-card .theme-toggle[data-theme='night']")).toHaveCount(21);
+    await expect(page.locator(".toggle-preview-card .theme-toggle[data-theme='night']")).toHaveCount(42);
     await page.getByLabel("Omezit pohyb").check();
     await expect(page.locator("html")).toHaveAttribute("data-preview-reduced-motion", "true");
 });

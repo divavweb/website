@@ -239,6 +239,8 @@ test("day/night configuration maps to palettes 4 and 5 and all pages include an 
         assert.match(buttons[0][2], /class="toggle-hill"/);
         assert.match(buttons[0][2], /class="toggle-open-flower"/);
         assert.match(buttons[0][2], /class="toggle-closed-flower"/);
+        assert.match(buttons[0][2], /class="toggle-botanical-art"/);
+        assert.match(buttons[0][2], /class="toggle-petal-detail"/);
         assert.match(buttons[0][2], /class="toggle-hill-arch"/);
     }
 
@@ -247,6 +249,8 @@ test("day/night configuration maps to palettes 4 and 5 and all pages include an 
     assert.deepEqual(variants.map((item) => item.id), [1, 2, 3, 4, 5, 6, 7]);
     assert.ok(variants.every((item) => item.name.length > 0), "every variant has a preview label");
     assert.match(css, /prefers-reduced-motion:\s*reduce/);
+    assert.match(css, /data-toggle-appearance="illustrated"/);
+    assert.match(css, /data-toggle-appearance="botanical"/);
     assert.match(css, /firefly-glow/);
     assert.match(css, /mask-image:\s*linear-gradient\(90deg,\s*transparent/);
     assert.match(css, /--color-page\s+480ms/);
@@ -302,5 +306,6 @@ test("preview handler enforces local host, read-only methods, path containment a
     for (let hill = 1; hill <= 3; hill += 1) {
         assert.match(toggleMatrix.body, new RegExp(`data-hill-variant="${hill}"`));
     }
-    assert.equal((toggleMatrix.body.match(/class="toggle-preview-card"/g) ?? []).length, 21);
+    assert.equal((toggleMatrix.body.match(/class="toggle-preview-card"/g) ?? []).length, 42);
+    assert.equal((toggleMatrix.body.match(/class="toggle-preview-group"/g) ?? []).length, 6);
 });

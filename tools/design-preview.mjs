@@ -173,6 +173,7 @@ function previewPage(variants) {
         ${select("palette", "Barevná paleta", [["theme", "Automaticky podle režimu"], ...variants.palette.map((item) => [item.id, label(item)])])}
         ${select("animation", "Animace tulipánu", variants.animation.map((item) => [item.id, label(item)]))}
         ${select("appearance", "Vzhled tulipánu", variants.appearance.map((item) => [item.id, label(item)]))}
+        ${select("toggleAppearance", "Vzhled květu přepínače", [["illustrated", "Ilustrovaný"], ["botanical", "Botanický"]])}
         ${select("toggleVariant", "Vzhled přepínače", variants.toggleVariant.map((item) => [item.id, label(item)]))}
         ${select("hillVariant", "Styl kopce pod tulipánem", variants.hillVariant.map((item) => [item.id, label(item)]))}
         ${select("theme", "Režim", [["day", "Den – Golden Calm"], ["night", "Noc – Evening Warmth"]])}
@@ -183,7 +184,7 @@ function previewPage(variants) {
     <script>
         const page = document.getElementById("page");
         const width = document.getElementById("width");
-        const variantControls = ["palette", "animation", "appearance", "toggleVariant", "hillVariant"].map((id) => document.getElementById(id));
+        const variantControls = ["palette", "animation", "appearance", "toggleAppearance", "toggleVariant", "hillVariant"].map((id) => document.getElementById(id));
         const theme = document.getElementById("theme");
         const reducedMotion = document.getElementById("reducedMotion");
         const showcase = document.getElementById("showcase");
@@ -206,12 +207,12 @@ async function themeToggleMatrixPage(root, variants) {
     const homepage = await readFile(resolve(root, "index.html"), "utf8");
     const button = homepage.match(/<button class="theme-toggle"[\s\S]*?<\/button>/)?.[0];
     if (!button) throw new Error("index.html neobsahuje přepínač motivu.");
-    const cells = variants.hillVariant.map((hill) => {
+    const cells = variants.hillVariant.map((hill) => variants.appearance.map((appearance) => {
         const toggles = variants.toggleVariant.map((variant) => {
             const previewButton = button
                 .replace(
                     'class="theme-toggle"',
-                    `class="theme-toggle" data-theme="day" data-toggle-variant="${variant.id}" data-hill-variant="${hill.id}" data-toggle-appearance="illustrated"`
+                    `class="theme-toggle" data-theme="day" data-toggle-variant="${variant.id}" data-hill-variant="${hill.id}" data-toggle-appearance="${appearance.id === 1 ? "illustrated" : "botanical"}"`
                 )
                 .replace(/\s+hidden(?=[\s>])/g, "");
             return `<section class="toggle-preview-card">
@@ -221,11 +222,11 @@ async function themeToggleMatrixPage(root, variants) {
                 <span class="toggle-state">Den</span>
             </section>`;
         }).join("");
-        return `<section class="toggle-preview-group" data-hill-variant="${hill.id}">
-            <h2>Kopce ${hill.id}: ${escapeHtml(hill.name)}</h2>
+        return `<section class="toggle-preview-group" data-hill-variant="${hill.id}" data-toggle-appearance="${appearance.id}">
+            <h2>Kopce ${hill.id}: ${escapeHtml(hill.name)} · ${escapeHtml(label(appearance))}</h2>
             <div class="toggle-preview-grid">${toggles}</div>
         </section>`;
-    }).join("");
+    }).join("")).join("");
 
     return `<!doctype html>
 <html lang="cs" data-theme="day" data-palette="4" data-toggle-variant="1" data-hill-variant="1" data-toggle-appearance="illustrated">

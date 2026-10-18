@@ -493,6 +493,52 @@ a:hover {
     opacity: 0;
 }
 
+.theme-toggle[data-toggle-appearance="illustrated"] .toggle-botanical-art {
+    display: none;
+}
+
+.theme-toggle[data-toggle-appearance="botanical"] .toggle-flower > :not(.toggle-botanical-art) {
+    display: none;
+}
+
+.toggle-petal-detail,
+.toggle-leaf-detail {
+    fill: none;
+    stroke: var(--tulip-petal-deep);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 0.9;
+    opacity: 0.8;
+}
+
+.toggle-leaf-detail {
+    stroke: var(--tulip-leaf-deep);
+    stroke-width: 0.55;
+    opacity: 0.9;
+}
+
+.toggle-filament {
+    fill: none;
+    stroke: var(--tulip-petal-deep);
+    stroke-linecap: round;
+    stroke-width: 0.75;
+}
+
+.toggle-stamen {
+    fill: var(--tulip-pollen);
+    stroke: var(--tulip-petal-deep);
+    stroke-width: 0.25;
+}
+
+.toggle-closed-detail {
+    opacity: 0.65;
+}
+
+.toggle-botanical-art .toggle-open-flower,
+.toggle-botanical-art .toggle-closed-flower {
+    stroke-width: 1.15;
+}
+
 .toggle-fireflies {
     fill: #ffdf70;
     opacity: 0;
